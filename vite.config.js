@@ -1,26 +1,21 @@
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue'
-import laravel from 'laravel-vite-plugin';
 import tailwindcss from 'tailwindcss';
-import { resolve } from 'path'
+import laravel from 'laravel-vite-plugin';
+import reactRefresh from '@vitejs/plugin-react-refresh'
+
 
 export default defineConfig({
     plugins: [
-        tailwindcss(),
-        vue(),
-        laravel({
-            input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-            ],
-            refresh: true,
-        }),
+      reactRefresh(),
+      tailwindcss(),
+      laravel({
+          input: [
+              'resources/js/index.css',
+              'resources/js/main.jsx',
+          ],
+          refresh: true,
+      }),
     ],
-    resolve: {
-      alias: {
-        '@': resolve(__dirname, 'resources'),
-      },
-    },
     server: {
       open: true,
     },

@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return EmployeeResource::collection(Employee::all());
+        return EmployeeResource::collection(Employee::where('active', 1)->get());
     }
 
     /**
@@ -36,7 +36,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      Employee::create($request->all());
+      return EmployeeResource::collection(Employee::where('active', 1)->get());
     }
 
     /**
@@ -83,6 +84,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
       $employee = Employee::find($id);
-      return $employee->delete();
+      $employee->update(['active' => 0]);
+      return $employee;
     }
 }

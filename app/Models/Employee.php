@@ -9,7 +9,7 @@ class Employee extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'occupation', 'color', 'vacation'];
+    protected $fillable = ['name', 'occupation', 'color', 'vacation', 'active'];
     public $timestamps = true;
     protected $casts = [
       'vacation' => 'json',

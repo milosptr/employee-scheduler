@@ -23,11 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('employees', [EmployeeController::class, 'index']);
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{id}', [EmployeeController::class, 'update']);
-Route::delete('employees', [EmployeeController::class, 'destroy']);
+Route::delete('employees/{id}', [EmployeeController::class, 'destroy']);
 
 Route::get('schedules', [ScheduleController::class, 'index']);
 Route::get('schedules/timeline', [ScheduleController::class, 'timeline']);
 Route::post('schedules', [ScheduleController::class, 'store']);
 Route::post('schedules/reorder', [ScheduleController::class, 'reorder']);
 Route::post('schedules/{id}', [ScheduleController::class, 'update']);
-Route::delete('schedules', [ScheduleController::class, 'destroy']);
+Route::delete('schedules/{id}', [ScheduleController::class, 'destroy']);
