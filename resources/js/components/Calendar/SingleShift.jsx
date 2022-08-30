@@ -10,6 +10,7 @@ export default function SingleShift(props) {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const activeOccupation = useSelector((state) => state.general.activeOccupation)
   const listEmployees = props.day.schedules.filter((e) => e.shift === props.shift && e.occupation === props.occupation).sort((a, b) => a.order - b.order)
+  const dateRange = useSelector((state) => state.general.dateRange)
   const [employees, setEmployees] = useState(listEmployees)
   const onSortEnd = ({oldIndex, newIndex}) => {
     if(oldIndex === newIndex)
@@ -25,7 +26,7 @@ export default function SingleShift(props) {
     setEmployees(sortedEmployees.sort((a, b) => a.order - b.order))
     axios.post('/api/schedules/reorder', sortedEmployees)
       .then(() => {
-        axios.get('/api/schedules/timeline')
+        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
         .then((res) => {
           dispatch(setTimeline(res.data))
         })
@@ -41,7 +42,7 @@ export default function SingleShift(props) {
       </div>
     )
   })
-  const borderClass = activeOccupation === null && props.shift === 1 && props.occupation === 1 ? 'border-l-2 border-gray-400' : 'border-l border-gray-300'
+  const borderClass = activeOccupation === null && props.shift === 1 && props.occupation === 0 ? 'border-l-2 border-gray-400' : 'border-l border-gray-300'
   const isDisabled = !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation && employees.every((e) => e.employee.id !== activeEmployee.id))
   const addEmployeForDate = () => {
     if(!isDisabled) {
@@ -55,7 +56,7 @@ export default function SingleShift(props) {
       axios.post('/api/schedules', schedule)
         .then((res) => {
           setEmployees([...employees, res.data.data])
-          axios.get('/api/schedules/timeline')
+          axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
             .then((res) => {
               dispatch(setTimeline(res.data))
             })

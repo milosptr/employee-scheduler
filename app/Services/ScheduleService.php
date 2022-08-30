@@ -2,27 +2,28 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use App\Models\Schedule;
+use App\Http\Resources\ScheduleResource;
 
 class ScheduleService
 {
-  protected $months;
   protected $schedules;
   protected $startDate;
   protected $endDate;
   protected $diffInDays;
 
-  public function setPeriod($months = 2)
+  public function setPeriod($range)
   {
-    $this->months = $months;
-    $this->startDate = Carbon::now()->subMonths($this->months / 2);
-    $this->endDate = Carbon::now()->addMonths($this->months / 2);
-    $this->diffInDays =  $this->endDate->diffInDays($this->startDate);
+    $dates = explode(' to ', $range);
+    $this->startDate = $dates[0];
+    $this->endDate = $dates[1];
+    $this->diffInDays =  Carbon::parse($dates[1])->diffInDays(Carbon::parse($dates[0]));
     return $this;
   }
 
-  public function setSchedules($schedules)
+  public function setSchedules()
   {
-    $this->schedules = $schedules;
+    $this->schedules = ScheduleResource::collection(Schedule::whereBetween('date', [$this->startDate, $this->endDate])->get());
     return $this;
   }
 

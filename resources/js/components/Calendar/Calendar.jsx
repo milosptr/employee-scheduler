@@ -7,9 +7,10 @@ import CalendarHeader from './CalendarHeader'
 
 export default function Calendar() {
   const timeline = useSelector((state) => state.general.timeline)
+  const dateRange = useSelector((state) => state.general.dateRange)
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get('/api/schedules/timeline')
+    axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
       .then((res) => {
         dispatch(setTimeline(res.data))
       })

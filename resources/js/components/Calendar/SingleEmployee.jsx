@@ -21,21 +21,22 @@ export default function SingleEmployee(props) {
   return (
     <div
       className={
-        'relative rounded-xl py-1 px-2 text-center whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-4 '
+        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-4 '
         + textColorClass
-        + (activeOccupation !== null ? ' justify-between' : ' justify-center')
       }
       style={{ backgroundColor: props.employee.color }}
     >
-      <div>{ props.employee.name }</div>
-      { activeOccupation !== null && <div className="flex items-center gap-2">
+      <div className="truncate w-24 text-left">{ props.employee.name }</div>
+      <div className="flex items-center gap-2">
+        { activeOccupation !== null &&
         <div className="cursor-pointer" onClick={handleEditSchedule}>
           <PencilIcon className={'h-4 w-4 ' + textColorClass} />
         </div>
+        }
         <div className="cursor-pointer" onClick={handleDeleteSchedule}>
           <XMarkIcon className={'h-4 w-4 ' + textColorClass} />
         </div>
-      </div>}
+      </div>
     </div>
   )
 }

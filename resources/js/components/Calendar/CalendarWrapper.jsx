@@ -1,10 +1,14 @@
 import React from 'react'
 import dayjs from 'dayjs'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveEmployee, setActiveOccupation } from '../../store/general'
+import { setActiveEmployee, setActiveOccupation, setDateRange, setTimeline } from '../../store/general'
 import Calendar from './Calendar'
+import DatePicker from 'react-multi-date-picker'
+import { CalendarDaysIcon } from '@heroicons/react/24/outline'
 
 export default function CalendarWrapper() {
+  const datePickerRef = React.useRef()
   const state = useSelector((state) => state.general)
   const dispatch = useDispatch()
   const listOccupations = state.occupations.map((o) => {
@@ -24,27 +28,56 @@ export default function CalendarWrapper() {
   const occupations = state.activeOccupation !== null ? state.occupations.filter((o) => o.id === state.activeOccupation) : state.occupations.filter((o) => o.id !== null)
   const listOccupationsNames = occupations.map((o) => <div key={o.id}>{ o.name }</div>)
   const gridCols = state.activeOccupation !== null ? 'grid-cols-1' : 'grid-cols-2'
-  const jumpToToday = () => {
-    const today = dayjs().format('YYYY-MM-DD')
-    document.querySelector(`[data-day="${today}"`).focus()
+  const updateDateRange = (v) => {
+    if(v.length === 2) {
+      datePickerRef.current.closeCalendar()
+      const start = dayjs(v[0].unix * 1000).format('YYYY-MM-DD')
+      const end = dayjs(v[1].unix * 1000).format('YYYY-MM-DD')
+      dispatch(setDateRange([start, end]))
+      axios.get('/api/schedules/timeline?range=' + [start, end].join(' to '))
+        .then((res) => {
+          dispatch(setTimeline(res.data))
+        })
+    }
   }
+
   return (
     <div>
       <div className="flex justify-end items-center gap-4">
+        <div className="mr-auto">
+          <DatePicker
+            ref={datePickerRef}
+            range
+            onChange={updateDateRange}
+            value={state.dateRange}
+            weekStartDayIndex={1}
+            render={<CustomInput />}
+          />
+        </div>
         { listOccupations }
       </div>
-      <div className="mt-5 mb-1 flex gap-3">
-        <div>Jump to:</div>
-        <div className='text-indigo-500 cursor-pointer' onClick={jumpToToday}>
-          Today
-        </div>
-      </div>
-      <div className="overflow-scroll" style={{height: 'calc(100vh - 130px)'}}>
+      <div className="overflow-scroll mt-5" style={{height: 'calc(100vh - 120px)'}}>
         <div className={'grid sticky top-0 z-10 bg-gray-400 h-7 text-center text-white font-semibold text-lg ' + gridCols }>
           { listOccupationsNames }
         </div>
         <Calendar />
       </div>
+    </div>
+  )
+}
+
+function CustomInput({ openCalendar, value, handleValueChange }) {
+  const placeholder = value.length ? (value[0] + ' to ' + value[1]) : 'Select range'
+  return (
+    <div className="relative w-64">
+      <input
+        type="text"
+        className="relative border shadow-sm block w-56 sm:text-sm border-gray-300 rounded-md pl-10"
+        onFocus={openCalendar}
+        value={placeholder}
+        onChange={handleValueChange}
+      />
+      <CalendarDaysIcon className="absolute left-2 top-1.5 w-6 h-6 text-gray-700" />
     </div>
   )
 }

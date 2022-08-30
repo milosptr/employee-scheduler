@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
 export const general = createSlice({
   name: 'general',
   initialState: {
+    dateRange: [
+      dayjs().format('YYYY-MM-DD'),
+      dayjs().add(1, 'month').format('YYYY-MM-DD')
+    ],
     activeOccupation: null,
     activeEmployee: null,
     activeSchedule: null,
@@ -14,8 +19,8 @@ export const general = createSlice({
     employees: [],
     occupations: [
       { id: null, name: 'Sve' },
-      { id: 0, name: 'Šank' },
       { id: 1, name: 'Kuhinja' },
+      { id: 0, name: 'Šank' },
     ],
     shifts: 3,
     timeline: [],
@@ -49,6 +54,9 @@ export const general = createSlice({
     setEditActiveScheduleModal: (state, action) => {
       state.editActiveScheduleModal = action.payload
     },
+    setDateRange: (state, action) => {
+      state.dateRange = action.payload
+    },
   },
 })
 
@@ -63,6 +71,7 @@ export const {
   setTimeline,
   setActiveSchedule,
   setDeleteEmployeeModal,
+  setDateRange,
  } = general.actions
 
 export default general.reducer

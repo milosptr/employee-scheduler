@@ -12,6 +12,7 @@ export default function EditEmployeeModal() {
   const [employee, setEmployee] = useState(activeEmployee)
   const occupations = useSelector((state) => state.general.occupations)
   const showModal = useSelector((state) => state.general.showEditEmployeeModal)
+  const dateRange = useSelector((state) => state.general.dateRange)
   const dispatch = useDispatch()
   const closeEditEmployeeModal = () => {
     dispatch(toggleShowEditEmployeeModal())
@@ -37,7 +38,7 @@ export default function EditEmployeeModal() {
   const saveEmployee = () => {
     axios.post('/api/employees/' + employee.id, employee)
       .then(() => {
-        axios.get('/api/schedules/timeline')
+        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
           .then((res) => {
             dispatch(setTimeline([]))
             setTimeout(() => {

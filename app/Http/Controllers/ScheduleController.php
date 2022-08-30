@@ -25,13 +25,12 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function timeline($months = 2)
+    public function timeline(Request $request, $months = 2)
     {
       $scheduleService = new ScheduleService();
-      $schedules = ScheduleResource::collection(Schedule::all());
       $days = $scheduleService
-        ->setPeriod($months)
-        ->setSchedules($schedules)
+        ->setPeriod($request->get('range'))
+        ->setSchedules()
         ->parseDays();
       return $days;
     }

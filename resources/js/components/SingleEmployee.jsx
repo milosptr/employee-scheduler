@@ -7,6 +7,7 @@ import { getColorBrightness } from '../helpers'
 
 export default function SingleEmployee(props) {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
+  const timeline = useSelector((state) => state.general.timeline)
   const style = { backgroundColor: props.employee.color }
   const dispatch = useDispatch()
   const setEmployee = () => {
@@ -23,6 +24,10 @@ export default function SingleEmployee(props) {
   const canEdit = activeEmployee && activeEmployee.id === props.employee.id && <PencilSquareIcon className="mb-1 h-5 w-5 cursor-pointer" onClick={editEmployee}/>
   const canDelete = activeEmployee && activeEmployee.id === props.employee.id && <TrashIcon className="mb-1 h-5 w-5 cursor-pointer text-red-500" onClick={deleteEmployee}/>
   const textColorClass = getColorBrightness(props.employee.color) ? 'text-black' : 'text-white'
+  const employeeTotalShifts = timeline.reduce((a, v) => {
+    const hasEmployee = v.schedules.some((s) => s.employee.id === props.employee.id)
+    return a + (hasEmployee ? 1 : 0)
+  }, 0)
 
   return (
     <div className="my-2 flex items-center gap-4">
@@ -31,7 +36,7 @@ export default function SingleEmployee(props) {
         style={ style }
         onClick={setEmployee}
       >
-        { props.employee.name }
+        { props.employee.name } ({ employeeTotalShifts })
       </div>
       <div className="grid grid-cols-2 gap-2">
         { canEdit }

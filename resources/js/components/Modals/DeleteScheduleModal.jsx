@@ -8,6 +8,7 @@ import { setActiveSchedule, setTimeline } from '../../store/general'
 export default function DeleteScheduleModal() {
   const dispatch = useDispatch()
   const activeSchedule = useSelector((state) => state.general.activeSchedule)
+  const dateRange = useSelector((state) => state.general.dateRange)
   const closeDeleteScheduleModal = () => {
     dispatch(setActiveSchedule(null))
   }
@@ -15,7 +16,7 @@ export default function DeleteScheduleModal() {
     axios.delete('/api/schedules/' + activeSchedule.id)
       .then(() => {
         dispatch(setActiveSchedule(null))
-        axios.get('/api/schedules/timeline')
+        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
           .then((res) => {
             dispatch(setTimeline([]))
             setTimeout(() => {
