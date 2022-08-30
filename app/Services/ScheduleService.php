@@ -30,7 +30,7 @@ class ScheduleService
   public function parseDays()
   {
     $days = array();
-    for($i = 0; $i < $this->diffInDays; $i++) {
+    for($i = 0; $i <= $this->diffInDays; $i++) {
       $date = Carbon::parse($this->startDate)->addDays($i);
       $schedules = $this->schedules->filter(function ($value) use ($date) {
         return $value->date === $date->toDateString();

@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getColorBrightness } from '../../helpers'
 import { setEditActiveScheduleModal, setActiveSchedule } from '../../store/general'
-import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export default function SingleEmployee(props) {
   const activeOccupation = useSelector((state) => state.general.activeOccupation)
@@ -26,13 +26,11 @@ export default function SingleEmployee(props) {
       }
       style={{ backgroundColor: props.employee.color }}
     >
-      <div className="truncate w-24 text-left">{ props.employee.name }</div>
-      <div className="flex items-center gap-2">
-        { activeOccupation !== null &&
+      <div className="text-left">{ props.employee.name } {props.schedule.time ? (' - ' + props.schedule.time) : ''}</div>
+      <div className="flex items-center gap-1">
         <div className="cursor-pointer" onClick={handleEditSchedule}>
-          <PencilIcon className={'h-4 w-4 ' + textColorClass} />
+          <ClockIcon className={'h-4 w-4 ' + textColorClass} />
         </div>
-        }
         <div className="cursor-pointer" onClick={handleDeleteSchedule}>
           <XMarkIcon className={'h-4 w-4 ' + textColorClass} />
         </div>

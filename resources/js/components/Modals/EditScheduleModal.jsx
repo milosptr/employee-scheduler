@@ -1,20 +1,49 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { Dialog, Transition } from '@headlessui/react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setActiveSchedule, setEditActiveScheduleModal } from '../../store/general'
+import { setActiveSchedule, setEditActiveScheduleModal, setTimeline } from '../../store/general'
 
 export default function EditScheduleModal() {
   const dispatch = useDispatch()
   const activeSchedule = useSelector((state) => state.general.activeSchedule)
+  const dateRange = useSelector((state) => state.general.dateRange)
+  const [time, setTime] = useState(activeSchedule.time ? (activeSchedule.time + ':00') : '')
   const closeEditScheduleModal = () => {
     dispatch(setActiveSchedule(null))
     dispatch(setEditActiveScheduleModal(false))
   }
   const showModal = !!activeSchedule
   const dateFormatted = dayjs(activeSchedule.date).format('DD. MMM YYYY')
-  const saveSchedule = () => {}
+  const saveSchedule = () => {
+    axios.post('/api/schedules/' + activeSchedule.id, { time })
+      .then(() => {
+        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
+          .then((res) => {
+            dispatch(setTimeline([]))
+            setTimeout(() => {
+              dispatch(setTimeline(res.data))
+            }, 50);
+            dispatch(setActiveSchedule(null))
+            dispatch(setEditActiveScheduleModal(false))
+          })
+      })
+  }
+  const clearTime = () => {
+    axios.post('/api/schedules/' + activeSchedule.id, { time: '' })
+      .then(() => {
+        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
+          .then((res) => {
+            dispatch(setTimeline([]))
+            setTimeout(() => {
+              dispatch(setTimeline(res.data))
+            }, 50);
+            dispatch(setActiveSchedule(null))
+            dispatch(setEditActiveScheduleModal(false))
+          })
+      })
+  }
 
   return (
     <Transition.Root show={showModal} as={Fragment} onClose={closeEditScheduleModal}>
@@ -53,6 +82,30 @@ export default function EditScheduleModal() {
                       </Dialog.Title>
                       <div className="mt-2 text-gray-500">
                         You are editing schedule <span className="text-gray-900">{ activeSchedule.employee.name }</span> for <span className="text-gray-900">{ dateFormatted }</span>
+                      </div>
+                      <div className="grid grid-cols-1">
+                        <div className="">
+                          <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+                            Select time
+                          </label>
+                          <div className="relative rounded-md flex gap-2">
+                            <input
+                              type="time"
+                              name="time"
+                              id="time"
+                              step="3600000"
+                              className="focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-2/3"
+                              value={time}
+                              onChange={(e) => setTime(e.target.value)}
+                            />
+                            { time && <div
+                              className="text-sm border border-red-500 text-red-500 rounded-md flex items-center px-3 cursor-pointer hover:bg-red-500 hover:text-white"
+                              onClick={clearTime}
+                            >
+                              Remove
+                            </div> }
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

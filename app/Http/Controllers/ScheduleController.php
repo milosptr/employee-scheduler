@@ -28,11 +28,10 @@ class ScheduleController extends Controller
     public function timeline(Request $request, $months = 2)
     {
       $scheduleService = new ScheduleService();
-      $days = $scheduleService
+      return $scheduleService
         ->setPeriod($request->get('range'))
         ->setSchedules()
         ->parseDays();
-      return $days;
     }
 
     /**

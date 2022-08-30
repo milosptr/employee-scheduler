@@ -12,11 +12,6 @@ export default function SingleDay(props) {
   const listShifts = occupations.map((o) => shifts.map((s, i) => <SingleShift day={props.day} shift={i + 1} occupation={o.id} isDisabled={isDisabled} key={i + '-' + o.id} />))
   const isToday = dayjs(props.day.date).isSame(dayjs(), 'day')
 
-  useEffect(() => {
-    if(isToday)
-      dayRef.current.focus()
-  }, [])
-
   return (
     <tr
       ref={dayRef}

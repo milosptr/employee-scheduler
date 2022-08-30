@@ -28,7 +28,7 @@ export default function App() {
           </section>
 
           <aside className="hidden lg:block lg:flex-shrink-0 lg:order-first">
-            <div className="h-full relative flex flex-col w-96 border-r border-gray-200 bg-white overflow-y-auto py-4 px-4 lg:px-10">
+            <div className="h-full relative flex flex-col w-80 border-r border-gray-200 bg-white overflow-y-auto py-4 px-4 lg:px-10">
               <Sidebar />
             </div>
           </aside>
