@@ -86,7 +86,7 @@ export default function EditScheduleModal() {
                       <div className="grid grid-cols-1">
                         <div className="">
                           <label htmlFor="time" className="block text-sm font-medium text-gray-700">
-                            Select time
+                            Arrival time
                           </label>
                           <div className="relative rounded-md flex gap-2">
                             <input
