@@ -58,9 +58,14 @@ input[type="color"]::-webkit-color-swatch {
   }
 
   table td.SingleShift {
-    min-width: 110px;
+    min-width: 107px;
   }
   table td.SingleDate {
-    min-width: 60px;
+    min-width: 48px;
+  }
+
+  .SingleShift .text-xs {
+    font-size: 0.6rem;
+    line-height: 0.8rem;
   }
 }
