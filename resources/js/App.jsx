@@ -23,7 +23,7 @@ export default function App() {
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         <main className="flex-1 flex overflow-hidden">
           <section
-            className="min-w-0 flex-1 h-full flex flex-col overflow-y-auto lg:order-last py-4 px-4 lg:px-10"
+            className="min-w-0 flex-1 h-full flex flex-col overflow-y-auto lg:order-last py-4 px-2 lg:px-10"
           >
             <CalendarWrapper />
           </section>
