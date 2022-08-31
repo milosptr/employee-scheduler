@@ -21,7 +21,7 @@ export default function SingleEmployee(props) {
   return (
     <div
       className={
-        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-4 text-white'
+        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-2 lg:gap-4 text-white'
       }
       style={{ backgroundColor: props.employee.color }}
     >

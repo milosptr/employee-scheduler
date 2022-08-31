@@ -66,7 +66,7 @@ export default function SingleShift(props) {
 
   return (
     <td
-      className={'SingleShift py-3 px-4 ' + borderClass + (isDisabled && activeEmployee !== null ? ' bg-gray-200 cursor-not-allowed ' : '') }
+      className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 ' + borderClass + (isDisabled && activeEmployee !== null ? ' bg-gray-200 cursor-not-allowed ' : '') }
       onClick={addEmployeForDate}
     >
       <SortableList items={employees.filter((e) => e?.id)} onSortEnd={onSortEnd} pressDelay={200} />
