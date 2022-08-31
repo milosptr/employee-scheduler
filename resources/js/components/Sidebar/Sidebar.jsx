@@ -31,7 +31,7 @@ export default function Sidebar() {
         <UserPlusIcon onClick={addEmlpoyeeModal} className="w-6 h-6 cursor-pointer" />
         <PrinterIcon onClick={() => printElement('schedulesTable')} className="w-6 h-6 cursor-pointer" />
       </div>
-      <div className="grid grid-cols-1 gap-6 mt-5">
+      <div className="grid grid-cols-1 gap-6 mt-5 pb-24 sm:pb-0">
         { listOccupationEmployees }
       </div>
     </div>
