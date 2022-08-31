@@ -5,6 +5,7 @@ import SingleShift from './SingleShift'
 
 export default function SingleDay(props) {
   const dayRef = useRef()
+  const daysOfWeek = ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub']
   const state = useSelector((state) => state.general)
   const isDisabled = state.activeEmployee && state.activeEmployee.vacation.find((date) => date === props.day.date)
   const shifts = Array.from(Array(state.shifts).keys())
@@ -12,7 +13,7 @@ export default function SingleDay(props) {
   const listShifts = occupations.map((o) => shifts.map((s, i) => <SingleShift day={props.day} shift={i + 1} occupation={o.id} isDisabled={isDisabled} key={i + '-' + o.id} />))
   const isToday = dayjs(props.day.date).isSame(dayjs(), 'day')
   const isSunday = dayjs(props.day.date).day() === 0
-  const dayName = dayjs(props.day.date).format('ddd')
+  const dayName = daysOfWeek[dayjs(props.day.date).day()]
 
   return (
     <tr
