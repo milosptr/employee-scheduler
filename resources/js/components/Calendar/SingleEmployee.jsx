@@ -5,8 +5,6 @@ import { setEditActiveScheduleModal, setActiveSchedule } from '../../store/gener
 import { XMarkIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export default function SingleEmployee(props) {
-  const activeOccupation = useSelector((state) => state.general.activeOccupation)
-  const textColorClass = getColorBrightness(props.employee.color) ? 'text-black' : 'text-white'
   const dispatch = useDispatch()
   const handleEditSchedule = (e) => {
     e.stopPropagation()
@@ -17,6 +15,11 @@ export default function SingleEmployee(props) {
     e.stopPropagation()
     dispatch(setActiveSchedule(props.schedule))
   }
+  const handleEmployeeClick = (e) => {
+    e.stopPropagation()
+    dispatch(setEditActiveScheduleModal(true))
+    dispatch(setActiveSchedule(props.schedule))
+  }
 
   return (
     <div
@@ -24,6 +27,7 @@ export default function SingleEmployee(props) {
         'relative rounded-xl py-1 px-2 text-center justify-center lg:justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-2 lg:gap-4 text-white'
       }
       style={{ backgroundColor: props.employee.color }}
+      onClick={handleEmployeeClick}
     >
       <div className="text-left text-xs sm:text-sm">
         <span className="font-semibold">{ props.employee.name }</span>

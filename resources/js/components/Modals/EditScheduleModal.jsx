@@ -44,6 +44,10 @@ export default function EditScheduleModal() {
           })
       })
   }
+  const handleDeleteSchedule = (e) => {
+    e.stopPropagation()
+    dispatch(setEditActiveScheduleModal(false))
+  }
 
   return (
     <Transition.Root show={showModal} as={Fragment} onClose={closeEditScheduleModal}>
@@ -85,7 +89,7 @@ export default function EditScheduleModal() {
                       </div>
                       <div className="grid grid-cols-1">
                         <div className="">
-                          <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="time" className="text-left block text-sm font-medium text-gray-700">
                             Arrival time
                           </label>
                           <div className="relative rounded-md flex gap-2">
@@ -119,6 +123,13 @@ export default function EditScheduleModal() {
                     onClick={saveSchedule}
                   >
                     Save
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 w-full lg:hidden justify-center rounded-md border border-red-500 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-0 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={handleDeleteSchedule}
+                  >
+                    Remove
                   </button>
                   <button
                     type="button"
