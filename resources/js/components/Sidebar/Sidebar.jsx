@@ -3,7 +3,7 @@ import axios from 'axios'
 import { setEmployees, setOpenAsideMenu, toggleShowAddEmployeeModal } from '.././../store/general'
 import { useSelector, useDispatch } from 'react-redux'
 import { Occupation } from './Occupation'
-import { PrinterIcon, FolderArrowDownIcon, UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { PrinterIcon, UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { printElement } from '../../helpers'
 
 
@@ -13,6 +13,7 @@ export default function Sidebar() {
   const addEmlpoyeeModal = () => {
     dispatch(toggleShowAddEmployeeModal())
   }
+  const activeOccupation = state.occupations.find((o) => o.id === state.activeOccupation)
 
 
   useEffect(() => {
@@ -22,7 +23,9 @@ export default function Sidebar() {
       })
   }, [])
 
-  const listOccupationEmployees = state.occupations.map((o) => o.id !== null && <Occupation key={o.id} id={o.id} title={o.name} ocupation={o} />)
+  const listOccupationEmployees = state.activeOccupation !== null ?
+    <Occupation id={activeOccupation.id} title={activeOccupation.name} ocupation={activeOccupation} />
+    : state.occupations.map((o) => o.id !== null && <Occupation key={o.id} id={o.id} title={o.name} ocupation={o} />)
 
   return (
     <div>
