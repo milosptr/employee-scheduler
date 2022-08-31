@@ -28,7 +28,7 @@ export default function SingleDay(props) {
         + (isToday ? ' bg-indigo-100 text-indigo-500' : '')
         + (isSunday ? ' text-red-500 ' : '')
         }>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center text-xs lg:text-sm">
           <div>{ dayName }</div>
           <div>{ props.day.date_formatted }</div>
         </div>

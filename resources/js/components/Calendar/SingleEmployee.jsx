@@ -25,9 +25,10 @@ export default function SingleEmployee(props) {
       }
       style={{ backgroundColor: props.employee.color }}
     >
-      <div className="text-left">
+      <div className="text-left text-xs sm:text-sm">
         <span className="font-semibold">{ props.employee.name }</span>
-        <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span></div>
+        <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span>
+      </div>
       <div className="flex items-center gap-1">
         <div className="cursor-pointer" onClick={handleEditSchedule}>
           <ClockIcon className={'h-4 w-4 text-white'} />
