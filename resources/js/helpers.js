@@ -47,7 +47,7 @@ export function printElement(id, title = 'Raspored') {
     let frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write(`<html><head><title>${title}</title>`);
-    frameDoc.document.write('<style>svg { display: none } .text-center {text-align: center;} table {border-collapse:collapse;width: 100%;} thead td {font-weight: bold;}</style></head><body>');
+    frameDoc.document.write('<style>* {font-family: "Helvetica", sans-serif; } svg { display: none } .text-center {text-align: center;} table {border-collapse:collapse;width: 100%;} thead td {font-weight: bold;}</style></head><body>');
     frameDoc.document.write(contents);
     frameDoc.document.write('</body></html>');
     frameDoc.document.close();
