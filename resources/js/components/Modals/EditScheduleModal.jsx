@@ -9,7 +9,7 @@ export default function EditScheduleModal() {
   const dispatch = useDispatch()
   const activeSchedule = useSelector((state) => state.general.activeSchedule)
   const dateRange = useSelector((state) => state.general.dateRange)
-  const [time, setTime] = useState(activeSchedule.time ? (activeSchedule.time + ':00') : '')
+  const [time, setTime] = useState(activeSchedule.time)
   const closeEditScheduleModal = () => {
     dispatch(setActiveSchedule(null))
     dispatch(setEditActiveScheduleModal(false))
@@ -17,7 +17,7 @@ export default function EditScheduleModal() {
   const showModal = !!activeSchedule
   const dateFormatted = dayjs(activeSchedule.date).format('DD. MMM YYYY')
   const saveSchedule = () => {
-    axios.post('/api/schedules/' + activeSchedule.id, { time })
+    axios.post('/api/schedules/' + activeSchedule.id, { time: time + ':00' })
       .then(() => {
         axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
           .then((res) => {
@@ -90,10 +90,12 @@ export default function EditScheduleModal() {
                           </label>
                           <div className="relative rounded-md flex gap-2">
                             <input
-                              type="time"
+                              type="number"
                               name="time"
                               id="time"
-                              step="3600000"
+                              step="1"
+                              min="0"
+                              max="23"
                               className="focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-2/3"
                               value={time}
                               onChange={(e) => setTime(e.target.value)}
