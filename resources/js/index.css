@@ -64,7 +64,7 @@ input[type="color"]::-webkit-color-swatch {
     min-width: 48px;
   }
 
-  .SingleShift .text-xs {
+  .SingleDate .text-xs {
     font-size: 0.6rem;
     line-height: 0.8rem;
   }
