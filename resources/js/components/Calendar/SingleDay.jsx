@@ -12,6 +12,7 @@ export default function SingleDay(props) {
   const listShifts = occupations.map((o) => shifts.map((s, i) => <SingleShift day={props.day} shift={i + 1} occupation={o.id} isDisabled={isDisabled} key={i + '-' + o.id} />))
   const isToday = dayjs(props.day.date).isSame(dayjs(), 'day')
   const isSunday = dayjs(props.day.date).day() === 0
+  const dayName = dayjs(props.day.date).format('ddd')
 
   return (
     <tr
@@ -26,8 +27,9 @@ export default function SingleDay(props) {
         + (isToday ? ' bg-indigo-100 text-indigo-500' : '')
         + (isSunday ? ' text-red-500 ' : '')
         }>
-        <div className="flex items-center justify-center">
-          { props.day.date_formatted}
+        <div className="flex flex-col items-center justify-center">
+          <div>{ dayName }</div>
+          <div>{ props.day.date_formatted }</div>
         </div>
       </td>
       { listShifts }
