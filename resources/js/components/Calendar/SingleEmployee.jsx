@@ -21,12 +21,13 @@ export default function SingleEmployee(props) {
   return (
     <div
       className={
-        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-4 '
-        + textColorClass
+        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-4 text-white'
       }
       style={{ backgroundColor: props.employee.color }}
     >
-      <div className="text-left">{ props.employee.name } {props.schedule.time ? (' - ' + props.schedule.time) : ''}</div>
+      <div className="text-left">
+        <span className="font-semibold">{ props.employee.name }</span>
+        <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span></div>
       <div className="flex items-center gap-1">
         <div className="cursor-pointer" onClick={handleEditSchedule}>
           <ClockIcon className={'h-4 w-4 ' + textColorClass} />
