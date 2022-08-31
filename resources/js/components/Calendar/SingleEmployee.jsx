@@ -30,10 +30,10 @@ export default function SingleEmployee(props) {
         <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span></div>
       <div className="flex items-center gap-1">
         <div className="cursor-pointer" onClick={handleEditSchedule}>
-          <ClockIcon className={'h-4 w-4 ' + textColorClass} />
+          <ClockIcon className={'h-4 w-4 text-white'} />
         </div>
         <div className="cursor-pointer" onClick={handleDeleteSchedule}>
-          <XMarkIcon className={'h-4 w-4 ' + textColorClass} />
+          <XMarkIcon className={'h-4 w-4 text-white'} />
         </div>
       </div>
     </div>
