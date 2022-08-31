@@ -30,7 +30,7 @@ export default function SingleEmployee(props) {
       onClick={handleEmployeeClick}
     >
       <div className="text-left text-xs sm:text-sm">
-        <span className="font-semibold">{ props.employee.name }</span>
+        <span className="font-bold">{ props.employee.name }</span>
         <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span>
       </div>
       <div className="hidden lg:flex items-center gap-1">
