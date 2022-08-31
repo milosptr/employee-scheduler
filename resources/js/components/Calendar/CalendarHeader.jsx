@@ -8,7 +8,7 @@ export default function CalendarHeader() {
   const listShifts = occupations.map((o) => shifts.map((s, i) => <td key={i} className="border-l border-gray-400 py-3 font-semibold">Smena {i + 1}</td>))
 
   return (
-    <tr className={'sticky top-7 z-10 border border-t-0 border-gray-300 bg-gray-300 text-center text-sm font-medium text-gray-900 ' }>
+    <tr className={'sticky top-0 sm:top-7 z-10 border border-t-0 border-gray-300 bg-gray-300 text-center text-sm font-medium text-gray-900 ' }>
       <td className="py-3 font-semibold">Datum</td>
       { listShifts }
     </tr>

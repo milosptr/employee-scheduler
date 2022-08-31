@@ -21,7 +21,7 @@ export default function SingleDay(props) {
         'border border-t-0 border-gray-300 text-center text-sm font-medium text-gray-900 outline-gray-300 '
         + (isDisabled ? ' bg-gray-200' : '')
         }>
-      <td className={'py-3 px-4 font-bold text-center' + (isToday ? ' bg-indigo-100 text-indigo-500' : '')}>
+      <td className={'SingleDate py-3 px-4 font-bold text-center' + (isToday ? ' bg-indigo-100 text-indigo-500' : '')}>
         <div className="flex items-center justify-center">
           { props.day.date_formatted}
         </div>

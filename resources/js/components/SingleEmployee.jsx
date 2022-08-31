@@ -1,5 +1,5 @@
 import React from 'react'
-import { setActiveEmployee, toggleShowEditEmployeeModal, setDeleteEmployeeModal } from '../store/general'
+import { setActiveEmployee, toggleShowEditEmployeeModal, setDeleteEmployeeModal, setOpenAsideMenu } from '../store/general'
 import { useSelector, useDispatch } from 'react-redux'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { getColorBrightness } from '../helpers'
@@ -12,8 +12,11 @@ export default function SingleEmployee(props) {
   const dispatch = useDispatch()
   const setEmployee = () => {
     dispatch(setActiveEmployee(props.employee))
-    if(activeEmployee && activeEmployee.id === props.employee.id)
+    if(activeEmployee && activeEmployee.id === props.employee.id) {
       dispatch(setActiveEmployee(null))
+      return
+    }
+    if(window.innerWidth <= 768) dispatch(setOpenAsideMenu())
   }
   const editEmployee = () => {
     dispatch(toggleShowEditEmployeeModal())
@@ -32,12 +35,12 @@ export default function SingleEmployee(props) {
   return (
     <div className="my-2 flex items-center gap-4">
       <div
-        className={'rounded-xl py-1 px-4 focus-within:bg-gray-100 hover:bg-gray-100 lg:w-3/4 select-none opacity-80 cursor-pointer flex justify-between ' + textColorClass}
+        className={'rounded-xl py-1 px-4 focus-within:bg-gray-100 hover:bg-gray-100 w-3/4 select-none opacity-80 cursor-pointer flex justify-between ' + textColorClass}
         style={ style }
         onClick={setEmployee}
       >
         <div>{ props.employee.name }</div>
-        <div>{ employeeTotalShifts }</div>
+        <div className='ml-3 sm:ml-0'>{ employeeTotalShifts }</div>
       </div>
       <div className="grid grid-cols-2 gap-2">
         { canEdit }

@@ -15,6 +15,7 @@ export const general = createSlice({
     editActiveScheduleModal: false,
     showAddEmployeeModal: false,
     showDeleteEmployeeModal: false,
+    openAsideMenu: false,
     deleteMode: false,
     employees: [],
     occupations: [
@@ -57,6 +58,9 @@ export const general = createSlice({
     setDateRange: (state, action) => {
       state.dateRange = action.payload
     },
+    setOpenAsideMenu: (state) => {
+      state.openAsideMenu = !state.openAsideMenu
+    },
   },
 })
 
@@ -72,6 +76,7 @@ export const {
   setActiveSchedule,
   setDeleteEmployeeModal,
   setDateRange,
+  setOpenAsideMenu,
  } = general.actions
 
 export default general.reducer

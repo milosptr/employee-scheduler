@@ -2,10 +2,11 @@ import React from 'react'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveEmployee, setActiveOccupation, setDateRange, setTimeline } from '../../store/general'
+import { setActiveEmployee, setActiveOccupation, setDateRange, setTimeline, setOpenAsideMenu } from '../../store/general'
 import Calendar from './Calendar'
 import DatePicker from 'react-multi-date-picker'
-import { CalendarDaysIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, CalendarDaysIcon } from '@heroicons/react/24/outline'
+import SingleEmployee from '../SingleEmployee'
 
 export default function CalendarWrapper() {
   const datePickerRef = React.useRef()
@@ -19,7 +20,7 @@ export default function CalendarWrapper() {
     }
     return <div
         key={o.id}
-        className={'text-center px-6 py-2 border border-solid border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white focus:ring-0 select-none cursor-pointer ' + activeClass}
+        className={'w-full sm:w-auto text-center px-6 py-2 border border-solid border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white focus:ring-0 select-none cursor-pointer ' + activeClass}
         onClick={() => changeOccupation(o.id)}
       >
         { o.name }
@@ -43,8 +44,14 @@ export default function CalendarWrapper() {
 
   return (
     <div>
-      <div className="flex justify-end items-center gap-4">
-        <div className="mr-auto">
+      <div className="sm:hidden flex justify-between items-center mb-1">
+          { state.activeEmployee && <SingleEmployee employee={state.activeEmployee} /> }
+        <div className='ml-auto'>
+          <Bars3Icon className="w-8 h-8 my-2" onClick={() => dispatch(setOpenAsideMenu())} />
+        </div>
+      </div>
+      <div className="flex flex-col sm:flex-row sm:justify-end items-center gap-4">
+        <div className="w-full sm:mr-auto">
           <DatePicker
             ref={datePickerRef}
             range
@@ -54,10 +61,12 @@ export default function CalendarWrapper() {
             render={<CustomInput />}
           />
         </div>
-        { listOccupations }
+        <div className="w-full sm:w-auto flex gap-4">
+          { listOccupations }
+        </div>
       </div>
-      <div className="overflow-scroll mt-5" style={{height: 'calc(100vh - 120px)'}}>
-        <div className={'grid sticky top-0 z-10 bg-gray-400 h-7 text-center text-white font-semibold text-lg ' + gridCols }>
+      <div className="CalendarTableWrapper overflow-scroll mt-5">
+        <div className={'sticky left-0 top-0 z-10 bg-gray-400 h-7 text-center text-white font-semibold text-lg hidden sm:grid ' + gridCols }>
           { listOccupationsNames }
         </div>
         <Calendar />
@@ -69,10 +78,10 @@ export default function CalendarWrapper() {
 function CustomInput({ openCalendar, value, handleValueChange }) {
   const placeholder = value.length ? (value[0] + ' to ' + value[1]) : 'Select range'
   return (
-    <div className="relative w-64">
+    <div className="relative w-full sm:w-64">
       <input
         type="text"
-        className="relative border shadow-sm block w-56 sm:text-sm border-gray-300 rounded-md pl-10"
+        className="relative border shadow-sm block w-full sm:w-56 sm:text-sm border-gray-300 rounded-md pl-10"
         onFocus={openCalendar}
         value={placeholder}
         onChange={handleValueChange}

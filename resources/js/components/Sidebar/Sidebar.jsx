@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { setEmployees, toggleShowAddEmployeeModal } from '.././../store/general'
+import { setEmployees, setOpenAsideMenu, toggleShowAddEmployeeModal } from '.././../store/general'
 import { useSelector, useDispatch } from 'react-redux'
 import { Occupation } from './Occupation'
-import { PrinterIcon, FolderArrowDownIcon, UserPlusIcon } from '@heroicons/react/24/outline'
+import { PrinterIcon, FolderArrowDownIcon, UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { printElement } from '../../helpers'
 
 
@@ -27,6 +27,7 @@ export default function Sidebar() {
   return (
     <div>
       <div className="flex items-center justify-end gap-4">
+        <XMarkIcon className='w-6 h-6 mr-auto lg:hidden' onClick={() => dispatch(setOpenAsideMenu())} />
         <UserPlusIcon onClick={addEmlpoyeeModal} className="w-6 h-6 cursor-pointer" />
         <PrinterIcon onClick={() => printElement('schedulesTable')} className="w-6 h-6 cursor-pointer" />
       </div>

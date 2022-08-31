@@ -16,6 +16,7 @@ export default function App() {
   const editActiveScheduleModal = useSelector((state) => state.general.editActiveScheduleModal)
   const showDeleteEmployeeModal = useSelector((state) => state.general.showDeleteEmployeeModal)
   const showAddEmployeeModal = useSelector((state) => state.general.showAddEmployeeModal)
+  const openAsideMenu = useSelector((state) => state.general.openAsideMenu)
 
   return (
     <div className="h-screen flex">
@@ -27,8 +28,8 @@ export default function App() {
             <CalendarWrapper />
           </section>
 
-          <aside className="hidden lg:block lg:flex-shrink-0 lg:order-first">
-            <div className="h-full relative flex flex-col w-80 border-r border-gray-200 bg-white overflow-y-auto py-4 px-4 lg:px-10">
+          <aside className={"lg:block lg:flex-shrink-0 lg:order-first " + (openAsideMenu ? 'open' : '') }>
+            <div className="h-full relative flex flex-col lg:w-80 border-r border-gray-200 bg-white overflow-y-auto py-4 px-4 lg:px-10">
               <Sidebar />
             </div>
           </aside>
