@@ -21,7 +21,7 @@ export default function SingleEmployee(props) {
   return (
     <div
       className={
-        'relative rounded-xl py-1 px-2 text-center justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-2 lg:gap-4 text-white'
+        'relative rounded-xl py-1 px-2 text-center justify-center lg:justify-between whitespace-pre-wrap cursor-grab focus:cursor-grabbing select-none active:cursor-grabbing tracking-wide text-sm flex items-center gap-2 lg:gap-4 text-white'
       }
       style={{ backgroundColor: props.employee.color }}
     >
@@ -29,7 +29,7 @@ export default function SingleEmployee(props) {
         <span className="font-semibold">{ props.employee.name }</span>
         <span>{props.schedule.time ? (' - ' + props.schedule.time) : ''}</span>
       </div>
-      <div className="flex items-center gap-1">
+      <div className="hidden lg:flex items-center gap-1">
         <div className="cursor-pointer" onClick={handleEditSchedule}>
           <ClockIcon className={'h-4 w-4 text-white'} />
         </div>
