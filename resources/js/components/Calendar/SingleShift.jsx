@@ -43,7 +43,7 @@ export default function SingleShift(props) {
     )
   })
   const borderClass = activeOccupation === null && props.shift === 1 && props.occupation === 0 ? 'border-l-2 border-gray-400' : 'border-l border-gray-300'
-  const isDisabled = !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation && employees.every((e) => e.employee.id !== activeEmployee.id))
+  const isDisabled = !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation && employees.every((e) => e.employee?.id !== activeEmployee.id))
   const addEmployeForDate = () => {
     if(!isDisabled) {
       const schedule = {
@@ -69,7 +69,7 @@ export default function SingleShift(props) {
       className={'SingleShift py-3 px-4 ' + borderClass + (isDisabled && activeEmployee !== null ? ' bg-gray-200 cursor-not-allowed ' : '') }
       onClick={addEmployeForDate}
     >
-      <SortableList items={employees} onSortEnd={onSortEnd} pressDelay={200} />
+      <SortableList items={employees.filter((e) => e?.id)} onSortEnd={onSortEnd} pressDelay={200} />
     </td>
   )
 }

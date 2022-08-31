@@ -35,12 +35,12 @@ export default function SingleEmployee(props) {
   return (
     <div className="my-2 flex items-center gap-4">
       <div
-        className={'rounded-xl py-1 px-4 focus-within:bg-gray-100 hover:bg-gray-100 w-3/4 select-none opacity-80 cursor-pointer flex justify-between ' + textColorClass}
+        className={'rounded-xl py-1 px-4 focus-within:bg-gray-100 hover:bg-gray-100 w-3/4 select-none cursor-pointer flex justify-between ' + textColorClass}
         style={ style }
         onClick={setEmployee}
       >
         <div>{ props.employee.name }</div>
-        <div className='ml-3 sm:ml-0'>{ employeeTotalShifts }</div>
+        <div className='ml-3 sm:ml-0 font-semibold'>{ employeeTotalShifts }</div>
       </div>
       <div className="grid grid-cols-2 gap-2">
         { canEdit }
