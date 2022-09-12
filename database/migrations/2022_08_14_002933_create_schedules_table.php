@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('shift');
             $table->integer('occupation');
             $table->integer('order')->default(0);
-            $table->time('time')->nullable();
+            $table->string('time')->nullable();
             $table->timestamps();
         });
     }

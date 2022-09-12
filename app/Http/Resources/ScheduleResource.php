@@ -18,7 +18,7 @@ class ScheduleResource extends JsonResource
         return [
             'id' => $this->id,
             'date' => $this->date,
-            'time' => $this->time ? Carbon::parse($this->time)->format('H') : '',
+            'time' => $this->time,
             'shift' => $this->shift,
             'occupation' => $this->occupation,
             'order' => $this->order,
