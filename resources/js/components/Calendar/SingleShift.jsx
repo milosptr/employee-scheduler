@@ -73,7 +73,7 @@ export default function SingleShift(props) {
       className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 '
         + borderClass
         + (isDisabled && activeEmployee !== null ? ' cursor-not-allowed ' : '')
-        + (isVacation && activeEmployee !== null ? ' bg-red-50 ' : ' ')
+        + (isVacation && activeEmployee !== null ? ' bg-red-100 ' : ' ')
       }
       onClick={addEmployeForDate}
     >
