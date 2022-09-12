@@ -1,19 +1,18 @@
+import axios from 'axios'
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getColorBrightness } from '../../helpers'
+import { useDispatch } from 'react-redux'
 import { setEditActiveScheduleModal, setActiveSchedule } from '../../store/general'
-import { XMarkIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function SingleEmployee(props) {
   const dispatch = useDispatch()
-  const handleEditSchedule = (e) => {
-    e.stopPropagation()
-    dispatch(setEditActiveScheduleModal(true))
-    dispatch(setActiveSchedule(props.schedule))
-  }
   const handleDeleteSchedule = (e) => {
     e.stopPropagation()
-    dispatch(setActiveSchedule(props.schedule))
+    axios.delete('/api/schedules/' + props.schedule.id)
+    .then(() => {
+      dispatch(setActiveSchedule(null))
+      props.removeSchedule(props.schedule.id)
+    })
   }
   const handleEmployeeClick = (e) => {
     e.stopPropagation()
@@ -34,9 +33,6 @@ export default function SingleEmployee(props) {
         <span>{props.schedule.time ? props.schedule.time : ''}</span>
       </div>
       <div className="hidden lg:flex items-center gap-1">
-        <div className="cursor-pointer" onClick={handleEditSchedule}>
-          <ClockIcon className={'h-4 w-4 text-white'} />
-        </div>
         <div className="cursor-pointer" onClick={handleDeleteSchedule}>
           <XMarkIcon className={'h-4 w-4 text-white'} />
         </div>

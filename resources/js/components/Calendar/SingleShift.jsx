@@ -32,7 +32,10 @@ export default function SingleShift(props) {
         })
       })
   }
-  const SortableItem = SortableElement(({value}) => <SingleEmployee schedule={value} employee={value.employee} />)
+  const handleRemoveSchedule = (id) => {
+    setEmployees(employees.filter((e) => e.id !== id))
+  }
+  const SortableItem = SortableElement(({value}) => <SingleEmployee schedule={value} employee={value.employee} removeSchedule={handleRemoveSchedule} />)
   const SortableList = SortableContainer(({items}) => {
     return (
       <div className="flex flex-col gap-2">
@@ -44,6 +47,7 @@ export default function SingleShift(props) {
   })
   const borderClass = activeOccupation === null && props.shift === 1 && props.occupation === 0 ? 'border-l-2 border-gray-400' : 'border-l border-gray-300'
   const isDisabled = !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation && employees.every((e) => e.employee?.id !== activeEmployee.id))
+  const isVacation =  !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation)
   const addEmployeForDate = () => {
     if(!isDisabled) {
       const schedule = {
@@ -66,7 +70,11 @@ export default function SingleShift(props) {
 
   return (
     <td
-      className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 ' + borderClass + (isDisabled && activeEmployee !== null ? ' bg-gray-200 cursor-not-allowed ' : '') }
+      className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 '
+        + borderClass
+        + (isDisabled && activeEmployee !== null ? ' cursor-not-allowed ' : '')
+        + (isVacation && activeEmployee !== null ? ' bg-red-50 ' : ' ')
+      }
       onClick={addEmployeForDate}
     >
       <SortableList items={employees.filter((e) => e?.id)} onSortEnd={onSortEnd} pressDelay={200} />
