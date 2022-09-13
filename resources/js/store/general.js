@@ -5,8 +5,8 @@ export const general = createSlice({
   name: 'general',
   initialState: {
     dateRange: [
-      dayjs().format('YYYY-MM-DD'),
-      dayjs().add(1, 'month').format('YYYY-MM-DD')
+      dayjs().startOf('month').format('YYYY-MM-DD'),
+      dayjs().endOf('month').format('YYYY-MM-DD')
     ],
     activeOccupation: null,
     activeEmployee: null,

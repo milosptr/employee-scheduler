@@ -15,6 +15,11 @@ export default function SingleDay(props) {
   const isSunday = dayjs(props.day.date).day() === 0
   const dayName = daysOfWeek[dayjs(props.day.date).day()]
 
+  useEffect(() => {
+    if(isToday)
+      dayRef.current.focus()
+  }, [])
+
   return (
     <tr
       ref={dayRef}
