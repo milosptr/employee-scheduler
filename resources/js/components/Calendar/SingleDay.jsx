@@ -21,7 +21,7 @@ export default function SingleDay(props) {
       tabIndex="0"
       data-day={props.day.date}
       className={
-        'border border-t-0 border-gray-300 text-center text-sm font-medium text-gray-900 outline-gray-300 '
+        'border border-t-0 border-gray-300 text-center text-sm font-medium text-gray-900 outline-gray-300 select-none '
         + (isDisabled ? ' bg-red-100' : '')
         }>
       <td className={'SingleDate py-2 lg:py-3 px-1 lg:px-4 font-bold text-center'

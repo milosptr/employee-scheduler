@@ -70,7 +70,7 @@ export default function SingleShift(props) {
 
   return (
     <td
-      className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 '
+      className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 select-none '
         + borderClass
         + (isDisabled && activeEmployee !== null ? ' cursor-not-allowed ' : '')
         + (isVacation && activeEmployee !== null ? ' bg-red-100 ' : ' ')
