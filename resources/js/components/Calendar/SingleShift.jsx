@@ -12,6 +12,12 @@ export default function SingleShift(props) {
   const listEmployees = props.day.schedules.filter((e) => e.shift === props.shift && e.occupation === props.occupation).sort((a, b) => a.order - b.order)
   const dateRange = useSelector((state) => state.general.dateRange)
   const [employees, setEmployees] = useState(listEmployees)
+  const handleSetTimeline = () => {
+    axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
+        .then((res) => {
+          dispatch(setTimeline(res.data))
+        })
+  }
   const onSortEnd = ({oldIndex, newIndex}) => {
     if(oldIndex === newIndex)
       return
@@ -26,14 +32,12 @@ export default function SingleShift(props) {
     setEmployees(sortedEmployees.sort((a, b) => a.order - b.order))
     axios.post('/api/schedules/reorder', sortedEmployees)
       .then(() => {
-        axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
-        .then((res) => {
-          dispatch(setTimeline(res.data))
-        })
+        handleSetTimeline()
       })
   }
   const handleRemoveSchedule = (id) => {
     setEmployees(employees.filter((e) => e.id !== id))
+    handleSetTimeline()
   }
   const SortableItem = SortableElement(({value}) => <SingleEmployee schedule={value} employee={value.employee} removeSchedule={handleRemoveSchedule} />)
   const SortableList = SortableContainer(({items}) => {
