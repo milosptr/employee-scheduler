@@ -6,6 +6,7 @@ use App\Http\Resources\ScheduleResource;
 use App\Models\Schedule;
 use App\Services\ScheduleService;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -89,6 +90,16 @@ class ScheduleController extends Controller
         $schedule->update([ 'order' => $s['order'] ]);
       }
       return response('Successfully reordered!', 200);
+    }
+
+    public function pdf(Request $request)
+    {
+      $filename = 'schedule-'.Carbon::now()->format('Y-m-d-H-i-s').'.pdf';
+      $search = array('Č', 'č', 'Ć', 'ć');
+      $replace = array('C', 'c', 'C', 'c');
+      $body = str_replace($search, $replace, $request->get('body'));
+      Pdf::loadView('pdf.schedule', ['body' => $body])->setPaper('a4', 'landscape')->save('pdf/'.$filename);
+      return response(['file' => $filename]);
     }
 
     /**

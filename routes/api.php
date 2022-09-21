@@ -28,6 +28,7 @@ Route::delete('employees/{id}', [EmployeeController::class, 'destroy']);
 Route::get('schedules', [ScheduleController::class, 'index']);
 Route::get('schedules/timeline', [ScheduleController::class, 'timeline']);
 Route::post('schedules', [ScheduleController::class, 'store']);
+Route::post('schedules/pdf', [ScheduleController::class, 'pdf']);
 Route::post('schedules/reorder', [ScheduleController::class, 'reorder']);
 Route::post('schedules/{id}', [ScheduleController::class, 'update']);
 Route::delete('schedules/{id}', [ScheduleController::class, 'destroy']);

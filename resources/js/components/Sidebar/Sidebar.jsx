@@ -14,6 +14,22 @@ export default function Sidebar() {
     dispatch(toggleShowAddEmployeeModal())
   }
   const activeOccupation = state.occupations.find((o) => o.id === state.activeOccupation)
+  const print = () => {
+    const body = document.getElementById('schedulesTable').outerHTML
+    axios.post('/api/schedules/pdf', { body })
+      .then((res) => {
+        window.open('/pdf/' + res.data.file, '_blank')
+      })
+    // if(window.innerWidth > 768) {
+    //   printElement('schedulesTable')
+    // } else {
+    //   const body = document.getElementById('schedulesTable').outerHTML
+    //   axios.post('/api/schedules/pdf', { body })
+    //     .then((res) => {
+    //       window.open('/pdf/' + res.data.file, '_blank')
+    //     })
+    // }
+  }
 
 
   useEffect(() => {
@@ -32,7 +48,7 @@ export default function Sidebar() {
       <div className="flex items-center justify-end gap-4">
         <XMarkIcon className='w-6 h-6 mr-auto lg:hidden' onClick={() => dispatch(setOpenAsideMenu())} />
         <UserPlusIcon onClick={addEmlpoyeeModal} className="w-6 h-6 cursor-pointer" />
-        <PrinterIcon onClick={() => printElement('schedulesTable')} className="w-6 h-6 cursor-pointer" />
+        <PrinterIcon onClick={print} className="w-6 h-6 cursor-pointer" />
       </div>
       <div className="grid grid-cols-1 gap-6 mt-5 pb-24 sm:pb-0">
         { listOccupationEmployees }
