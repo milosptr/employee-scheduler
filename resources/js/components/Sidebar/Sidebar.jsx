@@ -19,6 +19,10 @@ export default function Sidebar() {
     axios.post('/api/schedules/pdf', { body })
       .then((res) => {
         window.open('/pdf/' + res.data.file, '_blank')
+        alert('radi')
+      })
+      .catch(() => {
+        alert('ne radi')
       })
     // if(window.innerWidth > 768) {
     //   printElement('schedulesTable')
