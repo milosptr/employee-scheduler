@@ -18,11 +18,7 @@ export default function Sidebar() {
     const body = document.getElementById('schedulesTable').outerHTML
     axios.post('/api/schedules/pdf', { body })
       .then((res) => {
-        window.open('/pdf/' + res.data.file, '_blank')
-        alert('radi')
-      })
-      .catch(() => {
-        alert('ne radi')
+        window.open('/pdf/' + res.data.file, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')
       })
     // if(window.innerWidth > 768) {
     //   printElement('schedulesTable')
