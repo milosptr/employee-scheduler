@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { setEmployees, setOpenAsideMenu, toggleShowAddEmployeeModal } from '.././../store/general'
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,7 +9,6 @@ import { printElement } from '../../helpers'
 
 export default function Sidebar() {
   const state = useSelector((state) => state.general)
-  const printAnchor = useRef();
   const dispatch = useDispatch()
   const addEmlpoyeeModal = () => {
     dispatch(toggleShowAddEmployeeModal())
@@ -19,8 +18,7 @@ export default function Sidebar() {
     const body = document.getElementById('schedulesTable').outerHTML
     axios.post('/api/schedules/pdf', { body })
       .then((res) => {
-        printAnchor.current.href = '/pdf/' + res.data.file
-        printAnchor.current.click()
+        window.open('/pdf/' + res.data.file)
       })
     // if(window.innerWidth > 768) {
     //   printElement('schedulesTable')
@@ -51,7 +49,7 @@ export default function Sidebar() {
         <XMarkIcon className='w-6 h-6 mr-auto lg:hidden' onClick={() => dispatch(setOpenAsideMenu())} />
         <UserPlusIcon onClick={addEmlpoyeeModal} className="w-6 h-6 cursor-pointer" />
         <PrinterIcon onClick={print} className="w-6 h-6 cursor-pointer" />
-        <a href="" ref={printAnchor} className="hidden" target="_blank"/>
+        <a href="" id="print-anchor" className="hidden" target="_blank"/>
       </div>
       <div className="grid grid-cols-1 gap-6 mt-5 pb-24 sm:pb-0">
         { listOccupationEmployees }
