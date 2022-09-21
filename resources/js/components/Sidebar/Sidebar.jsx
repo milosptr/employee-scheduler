@@ -18,7 +18,7 @@ export default function Sidebar() {
     const body = document.getElementById('schedulesTable').outerHTML
     axios.post('/api/schedules/pdf', { body })
       .then((res) => {
-        window.open('/pdf/' + res.data.file)
+        window.location.replace('/pdf/' + res.data.file)
       })
     // if(window.innerWidth > 768) {
     //   printElement('schedulesTable')
