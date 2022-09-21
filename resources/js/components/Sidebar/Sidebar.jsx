@@ -4,7 +4,6 @@ import { setEmployees, setOpenAsideMenu, toggleShowAddEmployeeModal } from '../.
 import { useSelector, useDispatch } from 'react-redux'
 import { Occupation } from './Occupation'
 import { PrinterIcon, UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { printElement } from '../../helpers'
 
 
 export default function Sidebar() {
@@ -18,7 +17,8 @@ export default function Sidebar() {
     const body = document.getElementById('schedulesTable').outerHTML
     axios.post('/api/schedules/pdf', { body })
       .then((res) => {
-        window.location.replace('/pdf/' + res.data.file)
+        if(window.innerWidth > 768) window.open('/pdf/' + res.data.file, '_blank')
+        else window.location.replace('/pdf/' + res.data.file)
       })
     // if(window.innerWidth > 768) {
     //   printElement('schedulesTable')
