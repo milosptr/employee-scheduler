@@ -43,6 +43,7 @@ export function printElement(id, title = 'Raspored') {
     frame1.name = "frame1";
     frame1.style.position = "absolute";
     frame1.style.top = "-1000000px";
+    frame1.style.width = "1920px";
     document.body.appendChild(frame1);
     let frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
     frameDoc.document.open();
