@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if(auth()->user())
+      return redirect('/dashboard');
     return view('auth.login');
 });
 

@@ -98,7 +98,7 @@ class ScheduleController extends Controller
       $search = array('Č', 'č', 'Ć', 'ć');
       $replace = array('C', 'c', 'C', 'c');
       $body = str_replace($search, $replace, $request->get('body'));
-      Pdf::loadView('pdf.schedule', ['body' => $body])->setPaper('a4', 'landscape')->save('pdf/'.$filename);
+      Pdf::loadView('pdf.schedule', ['body' => $body])->setPaper('a4')->save('pdf/'.$filename);
       return response(['file' => $filename]);
     }
 
