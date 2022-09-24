@@ -29,8 +29,8 @@ export default function EditEmployeeModal() {
       ...value
     })
   }
-  const vacationDays = employee.vacation.filter((d) => dayjs(d).isAfter(dayjs().subtract(1, 'day')))
-  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).isBefore(dayjs().subtract(1, 'day')))
+  const vacationDays = employee.vacation.filter((d) => dayjs(d).isAfter(dayjs().startOf('month').subtract(1, 'day')))
+  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).isBefore(dayjs().startOf('month').subtract(1, 'day')))
 
   const updateVacationDays = (dates) => {
     const days = dates.map((d) => dayjs(d.unix * 1000).format('YYYY-MM-DD'))
