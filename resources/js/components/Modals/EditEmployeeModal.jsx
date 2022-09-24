@@ -10,7 +10,7 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel"
 export default function EditEmployeeModal() {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const [employee, setEmployee] = useState(activeEmployee)
-  const [showPastVacationDays, setShowPastVacationDays] = useState(false)
+  const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
   const occupations = useSelector((state) => state.general.occupations)
   const showModal = useSelector((state) => state.general.showEditEmployeeModal)
   const dateRange = useSelector((state) => state.general.dateRange)
@@ -29,9 +29,11 @@ export default function EditEmployeeModal() {
       ...value
     })
   }
-  const vacationDays = employee.vacation.filter((d) => dayjs(d).isAfter(dayjs().startOf('month').subtract(1, 'day')))
-  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).isBefore(dayjs().startOf('month').subtract(1, 'day')))
-
+  const handleMonthChange = (date) => {
+    setSelectedMonth(date.month.index)
+  }
+  const currentMonthVacationDays = employee.vacation.filter((d) => dayjs(d).month() === selectedMonth)
+  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).month() !== selectedMonth)
   const updateVacationDays = (dates) => {
     const days = dates.map((d) => dayjs(d.unix * 1000).format('YYYY-MM-DD'))
     const vacation = [...new Set([...vacationOldDays, ...days])]
@@ -149,21 +151,14 @@ export default function EditEmployeeModal() {
                             </div>
                             <div onClick={(e) => e.stopPropagation()}>
                               <label htmlFor="vacation" className="block text-sm font-medium text-gray-700">
-                                <div className="flex items-center justify-between">
-                                  <div>Vacation days</div>
-                                  <div
-                                    className={'select-none cursor-pointer ' + (showPastVacationDays ? 'text-red-500' : 'text-indigo-500')}
-                                    onClick={() => setShowPastVacationDays(!showPastVacationDays)}
-                                  >
-                                    { showPastVacationDays ? 'Hide past' : 'Show past' }
-                                  </div>
-                                </div>
+                                Vacation days
                               </label>
                               <DatePicker
                                 ref={datePickerRef}
                                 multiple
                                 onChange={updateVacationDays}
-                                value={showPastVacationDays ? employee.vacation : vacationDays}
+                                onMonthChange={handleMonthChange}
+                                value={currentMonthVacationDays}
                                 portal
                                 portalTarget={calendarPortalTarget}
                                 sort
