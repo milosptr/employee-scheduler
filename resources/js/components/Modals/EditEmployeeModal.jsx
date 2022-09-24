@@ -10,6 +10,7 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel"
 export default function EditEmployeeModal() {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const [employee, setEmployee] = useState(activeEmployee)
+  const [showPastVacationDays, setShowPastVacationDays] = useState(false)
   const occupations = useSelector((state) => state.general.occupations)
   const showModal = useSelector((state) => state.general.showEditEmployeeModal)
   const dateRange = useSelector((state) => state.general.dateRange)
@@ -28,11 +29,15 @@ export default function EditEmployeeModal() {
       ...value
     })
   }
+  const vacationDays = employee.vacation.filter((d) => dayjs(d).isAfter(dayjs().subtract(1, 'day')))
+  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).isBefore(dayjs().subtract(1, 'day')))
+
   const updateVacationDays = (dates) => {
     const days = dates.map((d) => dayjs(d.unix * 1000).format('YYYY-MM-DD'))
+    const vacation = [...new Set([...vacationOldDays, ...days])]
     setEmployee({
       ...employee,
-      'vacation': days
+      'vacation': vacation
     })
   }
   const saveEmployee = () => {
@@ -144,13 +149,21 @@ export default function EditEmployeeModal() {
                             </div>
                             <div onClick={(e) => e.stopPropagation()}>
                               <label htmlFor="vacation" className="block text-sm font-medium text-gray-700">
-                                Vacation days
+                                <div className="flex items-center justify-between">
+                                  <div>Vacation days</div>
+                                  <div
+                                    className={'select-none cursor-pointer ' + (showPastVacationDays ? 'text-red-500' : 'text-indigo-500')}
+                                    onClick={() => setShowPastVacationDays(!showPastVacationDays)}
+                                  >
+                                    { showPastVacationDays ? 'Hide past' : 'Show past' }
+                                  </div>
+                                </div>
                               </label>
                               <DatePicker
                                 ref={datePickerRef}
                                 multiple
                                 onChange={updateVacationDays}
-                                value={employee.vacation}
+                                value={showPastVacationDays ? employee.vacation : vacationDays}
                                 portal
                                 portalTarget={calendarPortalTarget}
                                 sort
