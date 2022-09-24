@@ -22,6 +22,15 @@ input[type="color"]::-webkit-color-swatch {
   border-radius: 6px;
 }
 
+.rmdp-panel * {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.rmdp-panel *::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
 
 .overflow-scroll {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
