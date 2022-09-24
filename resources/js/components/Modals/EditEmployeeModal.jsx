@@ -169,7 +169,7 @@ export default function EditEmployeeModal() {
                                 sort
                                 render={<CustomInput />}
                                 plugins={[
-                                  <DatePanel />
+                                  <DatePanel sort formatFunction={(d) => dayjs(d.format).format('DD.MM.YYYY.')}/>
                                 ]}
                               />
                             </div>
