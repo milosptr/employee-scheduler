@@ -2,13 +2,13 @@ import React from 'react'
 import { setActiveEmployee, toggleShowEditEmployeeModal, setDeleteEmployeeModal, setOpenAsideMenu } from '../store/general'
 import { useSelector, useDispatch } from 'react-redux'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { getColorBrightness } from '../helpers'
 
 
 export default function SingleEmployee(props) {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const timeline = useSelector((state) => state.general.timeline)
-  const style = { backgroundColor: props.employee.color }
+  const isNotSelected = activeEmployee && activeEmployee.id !== props.employee.id
+  const style = { backgroundColor: props.employee.color, opacity: isNotSelected ? '.5' : '1' }
   const dispatch = useDispatch()
   const setEmployee = () => {
     dispatch(setActiveEmployee(props.employee))

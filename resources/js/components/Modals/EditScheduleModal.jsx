@@ -3,7 +3,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { Dialog, Transition } from '@headlessui/react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setActiveSchedule, setEditActiveScheduleModal, setTimeline } from '../../store/general'
+import { setActiveSchedule, setEditActiveScheduleModal, setTimeline, setFocusDate } from '../../store/general'
 
 export default function EditScheduleModal() {
   const dispatch = useDispatch()
@@ -25,6 +25,7 @@ export default function EditScheduleModal() {
             setTimeout(() => {
               dispatch(setTimeline(res.data))
             }, 50);
+            dispatch(setFocusDate(activeSchedule.date))
             dispatch(setActiveSchedule(null))
             dispatch(setEditActiveScheduleModal(false))
           })

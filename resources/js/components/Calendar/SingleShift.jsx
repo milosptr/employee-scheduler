@@ -44,14 +44,14 @@ export default function SingleShift(props) {
     return (
       <div className="flex flex-col gap-2">
         {items.map((value, index) => (
-          <SortableItem key={`item-${value.id}`} index={index} value={value} disabled={employees.length < 2} />
+          <SortableItem key={`item-${value.id}-${value.time}`} index={index} value={value} disabled={employees.length < 2} />
         ))}
       </div>
     )
   })
   const borderClass = activeOccupation === null && props.shift === 1 && props.occupation === 0 ? 'border-l-2 border-gray-400' : 'border-l border-gray-300'
   const isDisabled = !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation && employees.every((e) => e.employee?.id !== activeEmployee.id))
-  const isVacation =  !(!props.isDisabled && activeEmployee && activeEmployee.occupation === props.occupation)
+  const isVacation =  props.isDisabled && (activeEmployee && activeEmployee.occupation === props.occupation)
   const addEmployeForDate = () => {
     if(!isDisabled) {
       const schedule = {
@@ -77,7 +77,7 @@ export default function SingleShift(props) {
       className={'SingleShift py-2 lg:py-3 px-1.5 lg:px-4 select-none '
         + borderClass
         + (isDisabled && activeEmployee !== null ? ' cursor-not-allowed ' : '')
-        + (isVacation && activeEmployee !== null ? ' bg-red-100 ' : ' ')
+        + (isVacation && activeEmployee !== null ? ' bg-red-200 ' : ' ')
       }
       onClick={addEmployeForDate}
     >

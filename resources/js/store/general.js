@@ -26,6 +26,7 @@ export const general = createSlice({
     shifts: 3,
     timeline: [],
     trashDraggableGroup: null,
+    focusDate: null,
   },
   reducers: {
     setActiveOccupation: (state, action) => {
@@ -61,6 +62,9 @@ export const general = createSlice({
     setOpenAsideMenu: (state) => {
       state.openAsideMenu = !state.openAsideMenu
     },
+    setFocusDate: (state, action) => {
+      state.focusDate = action.payload
+    },
   },
 })
 
@@ -77,6 +81,7 @@ export const {
   setDeleteEmployeeModal,
   setDateRange,
   setOpenAsideMenu,
+  setFocusDate,
  } = general.actions
 
 export default general.reducer

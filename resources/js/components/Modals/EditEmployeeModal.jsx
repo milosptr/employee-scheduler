@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleShowEditEmployeeModal, setActiveEmployee, setTimeline, setEmployees } from '../../store/general'
 import DatePicker from "react-multi-date-picker"
 import DatePanel from "react-multi-date-picker/plugins/date_panel"
+import colors from "react-multi-date-picker/plugins/colors"
 
 export default function EditEmployeeModal() {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
@@ -35,6 +36,7 @@ export default function EditEmployeeModal() {
   const currentMonthVacationDays = employee.vacation.filter((d) => dayjs(d).month() === selectedMonth)
   const vacationOldDays = employee.vacation.filter((d) => dayjs(d).month() !== selectedMonth)
   const updateVacationDays = (dates) => {
+    console.log(dates);
     const days = dates.map((d) => dayjs(d.unix * 1000).format('YYYY-MM-DD'))
     const vacation = [...new Set([...vacationOldDays, ...days])]
     setEmployee({
@@ -164,6 +166,7 @@ export default function EditEmployeeModal() {
                                 sort
                                 render={<CustomInput />}
                                 plugins={[
+                                  // colors({ colors: ["blue","green", "red"] }),
                                   <DatePanel sort formatFunction={(d) => dayjs(d.format).format('DD.MM.YYYY.')}/>
                                 ]}
                               />
