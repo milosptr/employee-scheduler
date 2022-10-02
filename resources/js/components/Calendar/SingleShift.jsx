@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import { setTimeline } from '../../store/general'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,9 +9,10 @@ export default function SingleShift(props) {
   const dispatch = useDispatch()
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const activeOccupation = useSelector((state) => state.general.activeOccupation)
-  const listEmployees = props.day.schedules.filter((e) => e.shift === props.shift && e.occupation === props.occupation).sort((a, b) => a.order - b.order)
+  const focusDate = useSelector((state) => state.general.focusDate)
   const dateRange = useSelector((state) => state.general.dateRange)
-  const [employees, setEmployees] = useState(listEmployees)
+  const [employees, setEmployees] = useState(props.day.schedules.filter((e) => e.shift === props.shift && e.occupation === props.occupation).sort((a, b) => a.order - b.order))
+  // const [availableEmployees, setAvailableEmployees] = useState(employees.filter((e) => e?.id))
   const handleSetTimeline = () => {
     axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
         .then((res) => {
@@ -44,7 +45,7 @@ export default function SingleShift(props) {
     return (
       <div className="flex flex-col gap-2">
         {items.map((value, index) => (
-          <SortableItem key={`item-${value.id}-${value.time}`} index={index} value={value} disabled={employees.length < 2} />
+          <SortableItem key={`item-${value.id}`} index={index} value={value} disabled={employees.length < 2} />
         ))}
       </div>
     )
@@ -71,6 +72,11 @@ export default function SingleShift(props) {
         })
     }
   }
+
+  useEffect(() => {
+    if(props.day.date === focusDate)
+      setEmployees(props.day.schedules.filter((e) => e.shift === props.shift && e.occupation === props.occupation).sort((a, b) => a.order - b.order))
+  }, [props.day])
 
   return (
     <td

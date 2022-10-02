@@ -21,10 +21,7 @@ export default function EditScheduleModal() {
       .then(() => {
         axios.get('/api/schedules/timeline?range=' + dateRange.join(' to '))
           .then((res) => {
-            dispatch(setTimeline([]))
-            setTimeout(() => {
-              dispatch(setTimeline(res.data))
-            }, 50);
+            dispatch(setTimeline(res.data))
             dispatch(setFocusDate(activeSchedule.date))
             dispatch(setActiveSchedule(null))
             dispatch(setEditActiveScheduleModal(false))

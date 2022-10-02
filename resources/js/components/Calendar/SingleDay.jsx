@@ -21,10 +21,6 @@ export default function SingleDay(props) {
   useEffect(() => {
     if(isToday && focusDate === null)
     dayRef.current.focus()
-    if(focusDate === props.day.date) {
-      dayRef.current.focus()
-      dispatch(setFocusDate(null))
-    }
   }, [])
 
   return (
