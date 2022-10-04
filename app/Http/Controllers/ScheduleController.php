@@ -92,6 +92,12 @@ class ScheduleController extends Controller
       return response('Successfully reordered!', 200);
     }
 
+    public function today()
+    {
+      $today = Carbon::now()->format('Y-m-d');
+      return ScheduleResource::collection(Schedule::where('date', $today)->get());
+    }
+
     public function pdf(Request $request)
     {
       $filename = 'schedule-'.Carbon::now()->format('Y-m-d-H-i-s').'.pdf';
