@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::prefix('public')->group(function () {
+Route::group(['prefix' => 'public', 'middleware' => ['cors']], function(){
   Route::get('today', [ScheduleController::class, 'today']);
 });
 
