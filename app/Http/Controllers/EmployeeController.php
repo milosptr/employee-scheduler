@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EmployeeCheckinResource;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ class EmployeeController extends Controller
     public function index()
     {
         return EmployeeResource::collection(Employee::where('active', 1)->get());
+    }
+
+    public function indexWithCheckin()
+    {
+      return EmployeeCheckinResource::collection(Employee::where('active', 1)->get());
     }
 
     /**

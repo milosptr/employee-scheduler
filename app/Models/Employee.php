@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
@@ -15,4 +16,14 @@ class Employee extends Model
     protected $casts = [
       'vacation' => 'json',
     ];
+
+    public function lastCheckin()
+    {
+      return $this->hasMany(EmployeeCheckin::class)->whereDate('created_at', Carbon::today())->get()->last();
+    }
+
+    public function checkins()
+    {
+      return $this->hasMany(EmployeeCheckin::class)->get();
+    }
 }

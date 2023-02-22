@@ -21,6 +21,7 @@ class EmployeeResource extends JsonResource
             'color' => $this->color,
             'vacation' => $this->vacation,
             'active' => $this->active,
+            'lastCheckin' => $this->lastCheckin(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

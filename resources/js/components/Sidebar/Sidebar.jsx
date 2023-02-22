@@ -3,7 +3,7 @@ import axios from 'axios'
 import { setEmployees, setOpenAsideMenu, toggleShowAddEmployeeModal } from '.././../store/general'
 import { useSelector, useDispatch } from 'react-redux'
 import { Occupation } from './Occupation'
-import { PrinterIcon, UserPlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { PrinterIcon, UserPlusIcon, XMarkIcon, CreditCardIcon } from '@heroicons/react/24/outline'
 
 
 export default function Sidebar() {
@@ -47,6 +47,7 @@ export default function Sidebar() {
     <div>
       <div className="flex items-center justify-end gap-4">
         <XMarkIcon className='w-6 h-6 mr-auto lg:hidden' onClick={() => dispatch(setOpenAsideMenu())} />
+        <CreditCardIcon className='w-6 h-6 mr-auto' onClick={() => window.open('/checkin')} />
         <UserPlusIcon onClick={addEmlpoyeeModal} className="w-6 h-6 cursor-pointer" />
         <PrinterIcon onClick={print} className="w-6 h-6 cursor-pointer" />
         <a href="" id="print-anchor" className="hidden" target="_blank"/>
