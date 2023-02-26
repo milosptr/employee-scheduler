@@ -12,7 +12,8 @@ const CheckinApp = () => {
   const barEmployees = employees.filter((employee) => !employee.occupation)
   const dateFormatOptions = {
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
+    hour12: false
   }
   const formatDate = (date) => {
     if(date) {
