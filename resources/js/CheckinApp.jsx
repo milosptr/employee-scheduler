@@ -27,7 +27,7 @@ const CheckinApp = () => {
   }
   const printCheckoutDate = (employee) => {
     if(employee.lastCheckin && employee.lastCheckin.check_out)
-      return formatDate(employee.lastCheckin.check_out)
+      return ` - ${formatDate(employee.lastCheckin.check_out)}`
     return ''
   }
 
@@ -53,17 +53,14 @@ const CheckinApp = () => {
               <div
                 key={employee.id}
                 className={`
-                  rounded-lg cursor-pointer py-5 text-xl text-gray-800 min-h-[108px]
+                  rounded-lg cursor-pointer py-5 text-xl text-gray-800 min-h-[100px]
                   ${employee.lastCheckin && employee.lastCheckin.check_out === null ? 'bg-green-500' : ''}
                   ${employee.lastCheckin === null ? 'bg-gray-300' : ''}
                   ${employee.lastCheckin && employee.lastCheckin.check_out ? 'bg-red-500' : ''}`}
                 onClick={() => handleCheckin(employee)}
               >
                 <strong>{employee.name}</strong>
-                <div className="text-sm">
-                  <div className="font-mono">{ printCheckinDate(employee) }</div>
-                  <div className="font-mono">{ printCheckoutDate(employee) }</div>
-                </div>
+                <div className="font-mono text-center text-sm">{ printCheckinDate(employee) }{ printCheckoutDate(employee) }</div>
               </div>
             ))}
           </div>
@@ -75,17 +72,14 @@ const CheckinApp = () => {
                 <div
                   key={employee.id}
                   className={
-                    `rounded-lg cursor-pointer py-5 text-xl text-gray-800 min-h-[108px]
+                    `rounded-lg cursor-pointer py-5 text-xl text-gray-800 min-h-[100px]
                     ${employee.lastCheckin && employee.lastCheckin.check_out === null ? 'bg-green-500' : ''}
                     ${employee.lastCheckin === null ? 'bg-gray-300' : ''}
                     ${employee.lastCheckin && employee.lastCheckin.check_out ? 'bg-red-500' : ''}`}
                   onClick={() => handleCheckin(employee)}
                 >
                   <strong>{employee.name}</strong>
-                  <div className="text-sm">
-                    <div className="font-mono">{ printCheckinDate(employee) }</div>
-                    <div className="font-mono">{ printCheckoutDate(employee) }</div>
-                  </div>
+                  <div className="font-mono text-center text-sm">{ printCheckinDate(employee) }{ printCheckoutDate(employee) }</div>
                 </div>
               ))}
             </div>
