@@ -22,6 +22,7 @@ class ArrivalResource extends JsonResource
             'total' => Carbon::parse($this->check_out)->diff(Carbon::parse($this->check_in))->format('%H:%I'),
             'check_in' => Carbon::parse($this->check_in)->format('H:i:s'),
             'check_out' => $this->check_out ? Carbon::parse($this->check_out)->format('H:i:s') : null,
+            'auto_checkout' => $this->auto_checkout,
             'created_at' => $this->created_at,
             'created_date' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'updated_at' => $this->updated_at,
