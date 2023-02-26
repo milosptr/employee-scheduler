@@ -11,16 +11,16 @@ class EmployeeCheckin extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'check_in', 'check_out'];
+    protected $fillable = ['employee_id', 'check_in', 'check_out', 'auto_checkout'];
     public $timestamps = true;
 
     public function employee()
     {
-      return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function lastCheckin()
     {
-      return $this->whereDate('created_at', Carbon::today())->get()->last();
+        return $this->whereDate('created_at', Carbon::today())->get()->last();
     }
 }
