@@ -17,8 +17,9 @@ use App\Http\Controllers\ScheduleController;
 */
 
 Route::get('/', function () {
-    if(auth()->user())
-      return redirect('/dashboard');
+    if (auth()->user()) {
+        return redirect('/dashboard');
+    }
     return view('auth.login');
 });
 
@@ -26,14 +27,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/checkin', function() {
-  return view('checkin');
+Route::get('/checkin', function () {
+    return view('checkin');
 })->name('checkin');
 
-Route::group(['prefix' => 'public', 'middleware' => ['cors']], function(){
-  Route::get('today', [ScheduleController::class, 'today']);
-  Route::get('arrivals', [EmployeeCheckinController::class, 'arrivals']);
-  Route::get('employees', [EmployeeController::class, 'index']);
+Route::group(['prefix' => 'public', 'middleware' => ['cors']], function () {
+    Route::get('today', [ScheduleController::class, 'today']);
+    Route::get('checkinsToday', [EmployeeCheckinController::class, 'checkinsToday']);
+    Route::get('arrivals', [EmployeeCheckinController::class, 'arrivals']);
+    Route::get('employees', [EmployeeController::class, 'index']);
 });
 
 require __DIR__.'/auth.php';
