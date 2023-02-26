@@ -44,7 +44,7 @@ const CheckinApp = () => {
   }, [])
 
   return (
-    <div className="bg-gray-100 min-h-[100vh] p-[2%]">
+    <div className="bg-gray-200 min-h-[100vh] p-[2%]">
       <div className="bg-white rounded-lg p-12">
         <div className="text-3xl font-semibold text-gray-900 mb-10">Prijavljivanje</div>
         <div>
