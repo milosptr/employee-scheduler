@@ -28,11 +28,11 @@ class ScheduleController extends Controller
      */
     public function timeline(Request $request, $months = 2)
     {
-      $scheduleService = new ScheduleService();
-      return $scheduleService
-        ->setPeriod($request->get('range'))
-        ->setSchedules()
-        ->parseDays();
+        $scheduleService = new ScheduleService();
+        return $scheduleService
+          ->setPeriod($request->get('range'))
+          ->setSchedules()
+          ->parseDays();
     }
 
     /**
@@ -43,8 +43,8 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-      $schedule = Schedule::create($request->all());
-      return new ScheduleResource($schedule);
+        $schedule = Schedule::create($request->all());
+        return new ScheduleResource($schedule);
     }
 
     /**
@@ -84,28 +84,30 @@ class ScheduleController extends Controller
 
     public function reorder(Request $request)
     {
-      foreach ($request->all() as $s) {
-        if(!isset($s['id'])) continue;
-        $schedule = Schedule::find($s['id']);
-        $schedule->update([ 'order' => $s['order'] ]);
-      }
-      return response('Successfully reordered!', 200);
+        foreach ($request->all() as $s) {
+            if (!isset($s['id'])) {
+                continue;
+            }
+            $schedule = Schedule::find($s['id']);
+            $schedule->update([ 'order' => $s['order'] ]);
+        }
+        return response('Successfully reordered!', 200);
     }
 
     public function today()
     {
-      $today = Carbon::now()->format('Y-m-d');
-      return ScheduleResource::collection(Schedule::where('date', $today)->get());
+        $today = Carbon::now('Europe/Belgrade')->format('Y-m-d');
+        return ScheduleResource::collection(Schedule::where('date', $today)->get());
     }
 
     public function pdf(Request $request)
     {
-      $filename = 'schedule-'.Carbon::now()->format('Y-m-d-H-i-s').'.pdf';
-      $search = array('Č', 'č', 'Ć', 'ć');
-      $replace = array('C', 'c', 'C', 'c');
-      $body = str_replace($search, $replace, $request->get('body'));
-      Pdf::loadView('pdf.schedule', ['body' => $body])->setPaper('a4')->save('pdf/'.$filename);
-      return response(['file' => $filename]);
+        $filename = 'schedule-'.Carbon::now('Europe/Belgrade')->format('Y-m-d-H-i-s').'.pdf';
+        $search = array('Č', 'č', 'Ć', 'ć');
+        $replace = array('C', 'c', 'C', 'c');
+        $body = str_replace($search, $replace, $request->get('body'));
+        Pdf::loadView('pdf.schedule', ['body' => $body])->setPaper('a4')->save('pdf/'.$filename);
+        return response(['file' => $filename]);
     }
 
     /**

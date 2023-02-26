@@ -32,7 +32,7 @@ class EndOfTheDayCommand extends Command
         // checkout all employees
         $checkins = EmployeeCheckin::whereNull('check_out')->get();
         foreach ($checkins as $checkin) {
-            $checkin->check_out = Carbon::now();
+            $checkin->check_out = Carbon::now('Europe/Belgrade');
             $checkin->save();
         }
         return 0;

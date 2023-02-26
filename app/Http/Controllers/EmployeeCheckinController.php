@@ -28,7 +28,7 @@ class EmployeeCheckinController extends Controller
         if ($checkinId) {
             $checkin = EmployeeCheckin::find($checkinId);
             if ($checkin && $checkin->check_out === null) {
-                $checkin->check_out = Carbon::now();
+                $checkin->check_out = Carbon::now('Europe/Belgrade');
                 $checkin->save();
                 try {
                     app(Pusher::class)->trigger('broadcasting', 'employee-checkin', []);
@@ -40,7 +40,7 @@ class EmployeeCheckinController extends Controller
         }
         EmployeeCheckin::create([
           'employee_id' => $employeeId,
-          'check_in' => Carbon::now()
+          'check_in' => Carbon::now('Europe/Belgrade')
         ]);
 
         try {
@@ -64,7 +64,7 @@ class EmployeeCheckinController extends Controller
         if ($request->has('from') && $request->has('to')) {
             $arrivals->whereBetween('employee_checkins.created_at', [Carbon::parse($request->get('from'))->startOfDay(), Carbon::parse($request->get('to'))->endOfDay()]);
         } else {
-            $arrivals->whereBetween('employee_checkins.created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+            $arrivals->whereBetween('employee_checkins.created_at', [Carbon::now('Europe/Belgrade')->startOfMonth(), Carbon::now('Europe/Belgrade')->endOfMonth()]);
         }
         $arrivals = ArrivalResource::collection($arrivals->get());
         $arrivals = $arrivals->groupBy(function ($date) {
@@ -85,7 +85,7 @@ class EmployeeCheckinController extends Controller
     public function checkinsToday()
     {
         // wip
-        $checkins = EmployeeCheckin::whereDate('employee_checkins.created_at', Carbon::now()->format('Y-m-d'))->pluck('employee_id');
+        $checkins = EmployeeCheckin::whereDate('employee_checkins.created_at', Carbon::now('Europe/Belgrade')->format('Y-m-d'))->pluck('employee_id');
         $checkedInEmployees = Employee::whereIn('id', $checkins)->get();
         return EmployeeCheckinResource::collection($checkedInEmployees);
     }
