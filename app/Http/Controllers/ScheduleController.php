@@ -96,13 +96,13 @@ class ScheduleController extends Controller
 
     public function today()
     {
-        $today = Carbon::now('Europe/Belgrade')->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
         return ScheduleResource::collection(Schedule::where('date', $today)->get());
     }
 
     public function pdf(Request $request)
     {
-        $filename = 'schedule-'.Carbon::now('Europe/Belgrade')->format('Y-m-d-H-i-s').'.pdf';
+        $filename = 'schedule-'.Carbon::now()->format('Y-m-d-H-i-s').'.pdf';
         $search = array('Č', 'č', 'Ć', 'ć');
         $replace = array('C', 'c', 'C', 'c');
         $body = str_replace($search, $replace, $request->get('body'));
