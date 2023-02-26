@@ -19,11 +19,11 @@ class Employee extends Model
 
     public function lastCheckin()
     {
-      return $this->hasMany(EmployeeCheckin::class)->whereDate('created_at', Carbon::today())->get()->last();
+        return $this->hasMany(EmployeeCheckin::class)->whereBetween('created_at', [Carbon::today()->addHours(4), Carbon::today()->endOfDay()->addHour(4)])->get()->last();
     }
 
     public function checkins()
     {
-      return $this->hasMany(EmployeeCheckin::class)->get();
+        return $this->hasMany(EmployeeCheckin::class)->get();
     }
 }
