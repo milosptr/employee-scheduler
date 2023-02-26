@@ -55,8 +55,10 @@ class EmployeeCheckinController extends Controller
     public function arrivals(Request $request)
     {
         $arrivals = EmployeeCheckin::selectRaw('employee_checkins.*');
+        $arrivals
+          ->leftJoin('employees', 'employees.id', '=', 'employee_checkins.employee_id')
+          ->where('employees.active', 1);
         if ($request->has('occupation')) {
-            $arrivals->leftJoin('employees', 'employees.id', '=', 'employee_checkins.employee_id');
             $arrivals->where('employees.occupation', $request->get('occupation'));
         }
         if ($request->has('from') && $request->has('to')) {
@@ -76,7 +78,7 @@ class EmployeeCheckinController extends Controller
         });
         return [
           'data' => $arrivalsCollection,
-          'employees' => Employee::where('occupation', $request->get('occupation'))->get('name')
+          'employees' => Employee::where('occupation', $request->get('occupation'))->where('active', 1)->get('name')
         ];
     }
 
