@@ -75,11 +75,11 @@ export const CheckinConfirmModal = () => {
                   { !error && (
                     <div className="mt-3 sm:mt-5">
                       <Dialog.Title as="h3" className="text-2xl font-bold leading-6 text-gray-900">
-                        { checkinType === CHECK_OUT ? 'Odjavljivanje' : 'Prijavljivanje'}
+                        { activeEmployee.name }
                       </Dialog.Title>
                       <div className="text-md mt-4 text-left">
                         <p className="text-gray-500">
-                          Zdravo, <strong>{ activeEmployee.name }</strong>, potvrdite { checkinType === CHECK_OUT ? ' odjavu.' : ' prijavu.' }
+                          Potvrdite { checkinType === CHECK_OUT ? ' odjavu.' : ' prijavu.' }
                         </p>
                         <div className="text-gray-500">
                           U toku istog dana mozete se vise puta prijaviti i odjaviti.
