@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            //
+            $table->integer('order')->default(0);
         });
     }
 
@@ -25,7 +25,6 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->integer('order')->default(0);
         });
     }
 };
