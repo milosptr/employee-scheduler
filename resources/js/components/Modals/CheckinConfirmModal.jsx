@@ -57,21 +57,29 @@ export const CheckinConfirmModal = () => {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  { !error && checkinType === CHECK_IN && (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                      <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
-                    </div>
-                  )}
-                  { !error && checkinType === CHECK_OUT && (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-                      <XMarkIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                    </div>
-                  )}
-                  { !!error && (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-orange-600" aria-hidden="true" />
-                    </div>
-                  )}
+                  <div className="flex items-center gap-4">
+                    { !error && checkinType === CHECK_IN && (
+                      <>
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                          <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                        </div>
+                        <div className="text-2xl font-bold leading-6 text-gray-900">PRIJAVA</div>
+                      </>
+                    )}
+                    { !error && checkinType === CHECK_OUT && (
+                      <>
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                          <XMarkIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                        </div>
+                        <div className="text-2xl font-bold leading-6 text-gray-900">ODJAVA</div>
+                      </>
+                    )}
+                    { !!error && (
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
+                        <ExclamationTriangleIcon className="h-6 w-6 text-orange-600" aria-hidden="true" />
+                      </div>
+                    )}
+                  </div>
                   { !error && (
                     <div className="mt-3 sm:mt-5">
                       <Dialog.Title as="h3" className="text-2xl font-bold leading-6 text-gray-900">
