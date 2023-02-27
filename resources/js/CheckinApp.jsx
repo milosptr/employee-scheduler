@@ -58,6 +58,7 @@ const CheckinApp = () => {
                   ${employee.lastCheckin && employee.lastCheckin.check_out === null ? 'bg-green-500' : ''}
                   ${employee.lastCheckin === null ? 'bg-gray-300' : ''}
                   ${employee.lastCheckin && employee.lastCheckin.check_out ? 'bg-red-500' : ''}`}
+                style={{ order: employee.order ?? 0 }}
                 onClick={() => handleCheckin(employee)}
               >
                 <strong>{employee.name}</strong>
@@ -77,6 +78,7 @@ const CheckinApp = () => {
                     ${employee.lastCheckin && employee.lastCheckin.check_out === null ? 'bg-green-500' : ''}
                     ${employee.lastCheckin === null ? 'bg-gray-300' : ''}
                     ${employee.lastCheckin && employee.lastCheckin.check_out ? 'bg-red-500' : ''}`}
+                    style={{ order: employee.order ?? 0 }}
                   onClick={() => handleCheckin(employee)}
                 >
                   <strong>{employee.name}</strong>
