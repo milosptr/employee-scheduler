@@ -12,7 +12,9 @@ export const Occupation = (props) => {
       <div className="text-xl font-medium pb-1 border-b border-gray-200">
         { props.title }
       </div>
-      { listEmployees }
+      <div className="flex flex-col">
+        { listEmployees }
+      </div>
     </div>
   )
 }

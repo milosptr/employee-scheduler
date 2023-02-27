@@ -31,7 +31,7 @@ export default function SingleEmployee(props) {
   }, 0)
 
   return (
-    <div className="my-2 flex items-center gap-4">
+    <div className={`my-2 flex items-center gap-4`} style={{ order: props.employee.order ?? 0 }}>
       <div
         className={'rounded-xl py-1 px-4 focus-within:bg-gray-100 hover:bg-gray-100 w-3/4 select-none cursor-pointer flex justify-between text-white'}
         style={ style }
