@@ -13,7 +13,6 @@ const CheckinApp = () => {
   const dateFormatOptions = {
     hour: 'numeric',
     minute: 'numeric',
-    hour12: false,
     hourCycle: 'h23'
   }
   const formatDate = (date) => {
