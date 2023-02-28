@@ -97,7 +97,8 @@ class ScheduleController extends Controller
 
     public function today()
     {
-        return ScheduleResource::collection(Schedule::whereBetween('date', WorkingDay::getWorkingDay())->get());
+        $date = Carbon::parse(WorkingDay::getWorkingDay()[0])->format('Y-m-d');
+        return ScheduleResource::collection(Schedule::where('date', $date)->get());
     }
 
     public function pdf(Request $request)
