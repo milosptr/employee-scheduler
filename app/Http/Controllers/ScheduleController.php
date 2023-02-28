@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ScheduleResource;
 use App\Models\Schedule;
 use App\Services\ScheduleService;
+use App\Services\WorkingDay;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -96,8 +97,7 @@ class ScheduleController extends Controller
 
     public function today()
     {
-        $today = Carbon::now()->format('Y-m-d');
-        return ScheduleResource::collection(Schedule::where('date', $today)->get());
+        return ScheduleResource::collection(Schedule::whereBetween('date', WorkingDay::getWorkingDay())->get());
     }
 
     public function pdf(Request $request)
