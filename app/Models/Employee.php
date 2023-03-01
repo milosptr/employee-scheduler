@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\WorkingDay;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ class Employee extends Model
 
     public function lastCheckin()
     {
-        return $this->hasMany(EmployeeCheckin::class)->whereBetween('created_at', [Carbon::today()->addHours(4), Carbon::today()->endOfDay()->addHour(4)])->get()->last();
+        return $this->hasMany(EmployeeCheckin::class)->whereBetween('created_at', WorkingDay::getWorkingDay())->get()->last();
     }
 
     public function checkins()
