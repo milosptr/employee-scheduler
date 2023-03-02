@@ -9,6 +9,7 @@ const CHECK_IN = 1
 const CHECK_OUT = 2
 
 export const CheckinConfirmModal = () => {
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
@@ -18,14 +19,18 @@ export const CheckinConfirmModal = () => {
     dispatch(setActiveEmployee(null))
   }
   const handleCheckin = () => {
+    if(loading) return
+    setLoading(true)
     axios.post(`/api/employees/${activeEmployee.id}/checkin`, { employee: activeEmployee.id, checkin: lastCheckinId})
       .then((response) => {
         setError(false)
         dispatch(setEmployees(response.data.data))
+        setLoading(false)
         dispatch(setActiveEmployee(null))
       })
       .catch((error) => {
         setError(true)
+        setLoading(false)
       })
   }
 
