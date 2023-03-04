@@ -22,6 +22,7 @@ class ScheduleResource extends JsonResource
             'shift' => $this->shift,
             'occupation' => $this->occupation,
             'order' => $this->order,
+            'from_checkin' => $this->from_checkin,
             'employee' => new EmployeeResource($this->employee),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

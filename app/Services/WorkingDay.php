@@ -34,4 +34,16 @@ class WorkingDay
 
         return [$from[0], $to[1]];
     }
+
+    public static function getCurrentShift()
+    {
+        $hour = Carbon::now()->hour;
+        if ($hour >= 4 && $hour < 10) {
+            return 1;
+        } elseif ($hour >= 10 && $hour < 15) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
 }

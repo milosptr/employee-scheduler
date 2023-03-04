@@ -10,7 +10,7 @@ class Schedule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'employee_id', 'shift', 'occupation', 'time', 'order'];
+    protected $fillable = ['date', 'employee_id', 'shift', 'occupation', 'time', 'order', 'from_checkin'];
     public $timestamps = true;
 
     public function employee()

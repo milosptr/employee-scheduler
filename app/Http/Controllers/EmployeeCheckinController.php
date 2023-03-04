@@ -26,6 +26,7 @@ class EmployeeCheckinController extends Controller
         if (!$request->has('employee')) {
             return response('Wrong request!', 422);
         }
+        $employee = Employee::find($employeeId);
 
         if ($checkinId) {
             $checkin = EmployeeCheckin::find($checkinId);
@@ -44,6 +45,18 @@ class EmployeeCheckinController extends Controller
           'employee_id' => $employeeId,
           'check_in' => Carbon::now()
         ]);
+
+        $workingDate = Carbon::parse(WorkingDay::getWorkingDay()[0])->format('Y-m-d');
+        $schedule = Schedule::where('date', $workingDate)->where('employee_id', $employeeId)->get();
+        if (!count($schedule)) {
+            Schedule::create([
+              'date' => $workingDate,
+              'employee_id' => $employeeId,
+              'shift' => WorkingDay::getCurrentShift(),
+              'occupation' => $employee->occupation,
+              'from_checkin' => true
+            ]);
+        }
 
         try {
             app(Pusher::class)->trigger('broadcasting', 'employee-checkin', []);
