@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use Carbon\Carbon;
 
-use App\Services\Pusher;
 use App\Models\Employee;
+use App\Models\Schedule;
+use App\Services\Pusher;
+use App\Services\WorkingDay;
 use Illuminate\Http\Request;
 use App\Models\EmployeeCheckin;
 use Illuminate\Support\Facades\DB;
@@ -84,9 +86,13 @@ class EmployeeCheckinController extends Controller
 
     public function checkinsToday()
     {
-        // wip
-        $checkins = EmployeeCheckin::whereDate('employee_checkins.created_at', Carbon::now()->format('Y-m-d'))->pluck('employee_id');
-        $checkedInEmployees = Employee::whereIn('id', $checkins)->get();
+        $date = Carbon::parse(WorkingDay::getWorkingDay()[0])->format('Y-m-d');
+        $scheduleEmployees = Schedule::where('date', $date)->pluck('employee_id')->toArray();
+        $checkins = EmployeeCheckin::whereDate('employee_checkins.created_at', $date)->pluck('employee_id')->toArray();
+        $employeesNotOnSchedule = array_filter($checkins, function ($checkin) use ($scheduleEmployees) {
+            return !in_array($checkin, $scheduleEmployees);
+        });
+        $checkedInEmployees = Employee::whereIn('id', $employeesNotOnSchedule)->get();
         return EmployeeCheckinResource::collection($checkedInEmployees);
     }
 }
