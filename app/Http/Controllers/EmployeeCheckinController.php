@@ -93,7 +93,7 @@ class EmployeeCheckinController extends Controller
         });
         return [
           'data' => $arrivalsCollection,
-          'employees' => Employee::where('occupation', $request->get('occupation'))->where('active', 1)->get('name')
+          'employees' => Employee::where('occupation', $request->get('occupation'))->where('active', 1)->orderBy('order', 'ASC')->get('name')
         ];
     }
 
