@@ -11,6 +11,7 @@ const CHECK_OUT = 2
 export const CheckinConfirmModal = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [processing, setProcessing] = useState(false)
   const dispatch = useDispatch()
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const checkinType = activeEmployee.lastCheckin ? (activeEmployee.lastCheckin.check_out ? CHECK_IN : CHECK_OUT) : CHECK_IN
@@ -19,14 +20,24 @@ export const CheckinConfirmModal = () => {
     dispatch(setActiveEmployee(null))
   }
   const handleCheckin = () => {
-    if(loading) return
+    if(loading && processing) return
     setLoading(true)
+    setProcessing(true)
     axios.post(`/api/employees/${activeEmployee.id}/checkin`, { employee: activeEmployee.id, checkin: lastCheckinId})
       .then((response) => {
-        setError(false)
         dispatch(setEmployees(response.data.data))
-        setLoading(false)
-        dispatch(setActiveEmployee(null))
+        setError(false)
+        if(checkinType === CHECK_IN) {
+          setLoading(false)
+          dispatch(setActiveEmployee(null))
+          setProcessing(false)
+        } else {
+          setTimeout(() => {
+            setLoading(false)
+            dispatch(setActiveEmployee(null))
+            setProcessing(false)
+          }, 2000);
+        }
       })
       .catch((error) => {
         setError(true)
@@ -118,11 +129,28 @@ export const CheckinConfirmModal = () => {
                     { !error && (
                       <button
                         type="button"
-                        className={`inline-flex w-full justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-0 sm:text-sm
+                        className={`relative inline-flex w-full justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-0 sm:text-sm
                         ${checkinType === CHECK_OUT ? 'bg-red-600 hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'}`}
                         onClick={handleCheckin}
                       >
-                        { checkinType === CHECK_OUT ? 'ODJAVI SE' : 'PRIJAVI SE' }
+                        { checkinType === CHECK_IN && !processing && 'PRIJAVI SE' }
+                        { checkinType === CHECK_OUT && !processing && 'ODJAVI SE' }
+                        { processing && 'OBRADA...' }
+                        { processing && (
+                          <div className='absolute top-1.5 right-2 w-6'>
+                            <svg x="0px" y="0px" className='w-full' viewBox="0 0 50 50">
+                              <path fill="#fff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                                <animateTransform attributeType="xml"
+                                  attributeName="transform"
+                                  type="rotate"
+                                  from="0 25 25"
+                                  to="360 25 25"
+                                  dur="0.6s"
+                                  repeatCount="indefinite"/>
+                                </path>
+                              </svg>
+                          </div>
+                        )}
                       </button>
                     )}
                     {
