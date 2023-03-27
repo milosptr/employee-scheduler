@@ -17,7 +17,8 @@ export const CheckinConfirmModal = () => {
   const checkinType = activeEmployee.lastCheckin ? (activeEmployee.lastCheckin.check_out ? CHECK_IN : CHECK_OUT) : CHECK_IN
   const lastCheckinId = activeEmployee.lastCheckin ? activeEmployee.lastCheckin.id : null
   const handleClose = () => {
-    dispatch(setActiveEmployee(null))
+    if(!processing)
+      dispatch(setActiveEmployee(null))
   }
   const handleCheckin = () => {
     if(loading && processing) return
@@ -36,7 +37,7 @@ export const CheckinConfirmModal = () => {
             setLoading(false)
             dispatch(setActiveEmployee(null))
             setProcessing(false)
-          }, 2000);
+          }, 4500);
         }
       })
       .catch((error) => {
@@ -154,7 +155,7 @@ export const CheckinConfirmModal = () => {
                       </button>
                     )}
                     {
-                      !!error && (
+                      !processing && !!error && (
                         <button
                           type="button"
                           className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-indigo-600 hover:bg-indigo-700 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-0 sm:mt-0 sm:text-sm"
@@ -166,13 +167,15 @@ export const CheckinConfirmModal = () => {
                     }
                   </div>
                   <div className="sm:col-start-1">
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-0 sm:col-start-1 sm:mt-0 sm:text-sm"
-                      onClick={handleClose}
-                    >
-                      OTKAŽI
-                    </button>
+                    {!processing && (
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-0 sm:col-start-1 sm:mt-0 sm:text-sm"
+                        onClick={handleClose}
+                      >
+                        OTKAŽI
+                      </button>
+                    )}
                   </div>
                 </div>
               </Dialog.Panel>
