@@ -89,11 +89,10 @@ export default function CalendarWrapper() {
         </div>
         <Calendar />
         {globalLoading && (
-          <div className='fixed left-0 top-0 z-[100] w-full h-screen flex justify-center items-center'>
-            <div className='fixed left-0 top-0 w-full h-screen bg-white bg-opacity-50 z-[99]'></div>
+          <div className='fixed right-0 bottom-0 z-[100] w-16 flex justify-center items-center'>
             <svg
               version='1.1'
-              className='relative w-24 h-24 z-[100]'
+              className='relative w-16 h-16 z-[100]'
               x='0px'
               y='0px'
               viewBox='0 0 100 100'
