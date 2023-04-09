@@ -23,7 +23,7 @@ class ScheduleService
 
     public function setSchedules()
     {
-        $this->schedules = ScheduleResource::collection(Schedule::whereBetween('date', [$this->startDate, $this->endDate])->get());
+        $this->schedules = ScheduleResource::collection(Schedule::with('employee')->whereBetween('date', [$this->startDate, $this->endDate])->get());
         return $this;
     }
 
