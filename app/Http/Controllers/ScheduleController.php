@@ -19,7 +19,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return ScheduleResource::collection(Schedule::all());
+        return ScheduleResource::collection(Schedule::with('employee')->all());
     }
 
     /**
@@ -79,8 +79,7 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $schedule = Schedule::find($id);
-        return $schedule->update($request->all());
+        return Schedule::where('id', $id)->update($request->only(['date', 'employee_id', 'shift', 'occupation', 'time', 'order', 'from_checkin']));
     }
 
     public function reorder(Request $request)
@@ -98,7 +97,7 @@ class ScheduleController extends Controller
     public function today()
     {
         $date = Carbon::parse(WorkingDay::getWorkingDay()[0])->format('Y-m-d');
-        return ScheduleResource::collection(Schedule::where('date', $date)->get());
+        return ScheduleResource::collection(Schedule::with('employee')->where('date', $date)->get());
     }
 
     public function pdf(Request $request)
