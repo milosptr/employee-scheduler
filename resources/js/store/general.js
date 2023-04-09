@@ -4,13 +4,13 @@ import dayjs from 'dayjs'
 export const general = createSlice({
   name: 'general',
   initialState: {
-    dateRange: [
-      dayjs().startOf('month').format('YYYY-MM-DD'),
-      dayjs().endOf('month').format('YYYY-MM-DD')
-    ],
+    globalLoading: false,
+    dateRange: [dayjs().startOf('month').format('YYYY-MM-DD'), dayjs().endOf('month').format('YYYY-MM-DD')],
     activeOccupation: null,
     activeEmployee: null,
     activeSchedule: null,
+    activeDraggableEmployee: null,
+    targetDraggableElement: null,
     showEditEmployeeModal: false,
     editActiveScheduleModal: false,
     showAddEmployeeModal: false,
@@ -21,12 +21,12 @@ export const general = createSlice({
     occupations: [
       { id: null, name: 'Sve' },
       { id: 1, name: 'Kuhinja' },
-      { id: 0, name: 'Šank' },
+      { id: 0, name: 'Šank' }
     ],
     shifts: 3,
     timeline: [],
     trashDraggableGroup: null,
-    focusDate: null,
+    focusDate: null
   },
   reducers: {
     setActiveOccupation: (state, action) => {
@@ -34,6 +34,12 @@ export const general = createSlice({
     },
     setActiveEmployee: (state, action) => {
       state.activeEmployee = action.payload
+    },
+    setActiveDraggableEmployee: (state, action) => {
+      state.activeDraggableEmployee = action.payload
+    },
+    setTargetDraggableElement: (state, action) => {
+      state.targetDraggableElement = action.payload
     },
     setEmployees: (state, action) => {
       state.employees = action.payload
@@ -65,7 +71,10 @@ export const general = createSlice({
     setFocusDate: (state, action) => {
       state.focusDate = action.payload
     },
-  },
+    setGlobalLoading: (state, action) => {
+      state.globalLoading = action.payload
+    }
+  }
 })
 
 export const {
@@ -82,6 +91,9 @@ export const {
   setDateRange,
   setOpenAsideMenu,
   setFocusDate,
- } = general.actions
+  setActiveDraggableEmployee,
+  setTargetDraggableElement,
+  setGlobalLoading
+} = general.actions
 
 export default general.reducer
