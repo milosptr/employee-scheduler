@@ -1,0 +1,9 @@
+/node_modules
+/dist
+# storybook-build
+
+/storybook-static
+/cypress
+/build
+
+\*_/_.js
