@@ -26,7 +26,7 @@ export const UploadInventoryModal = ({ closeModal }) => {
     formData.append('date', date + ' 00:00:00')
     formData.append('file', file)
     axios
-      .post('http://127.0.0.1:8001/public/sales/import', formData, {
+      .post('http://192.168.200.30/public/sales/import', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
