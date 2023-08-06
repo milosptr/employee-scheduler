@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setActiveEmployee, setEmployees } from './store/general'
 import { CheckinConfirmModal } from './components/Modals/CheckinConfirmModal'
 import { UploadInventoryModal } from './components/Modals/UploadInventoryModal'
+import { UploadIcon } from './components/icons/UploadIcon'
 
 const CheckinApp = () => {
   const dispatch = useDispatch()
@@ -49,9 +50,9 @@ const CheckinApp = () => {
         <div className='flex items-start justify-between'>
           <div className='text-4xl font-semibold text-gray-900 mb-10 leading-none'>Prijavljivanje</div>
           <div
-            className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-6 py-2 cursor-pointer'
+            className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
             onClick={() => setShowUploadModal(true)}>
-            Uvoz
+            <UploadIcon />
           </div>
         </div>
         <div>

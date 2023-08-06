@@ -4,8 +4,10 @@ import axios from 'axios'
 export const UploadInventoryModal = ({ closeModal }) => {
   const dateValue = new Date()
   const year = dateValue.getFullYear()
+  const hours = dateValue.getHours()
   let month = dateValue.getMonth() + 1
   let day = dateValue.getDate()
+  if (hours <= 4) day = day - 1
   month = month < 10 ? `0${month}` : month
   day = day < 10 ? `0${day}` : day
   const currentDate = `${year}-${month}-${day}`
@@ -47,10 +49,9 @@ export const UploadInventoryModal = ({ closeModal }) => {
       <div className='relative z-[100] w-1/2 min-h-[50vh] bg-white p-10 rounded-lg'>
         {!success && (
           <>
-            <div className='text-xl font-semibold'>Uvezi magacin</div>
             <div>
               {error && (
-                <div className='rounded-md bg-red-50 p-4 my-5'>
+                <div className='rounded-md bg-red-50 p-4'>
                   <div className='flex'>
                     <div className='flex-shrink-0'>
                       <svg
@@ -83,7 +84,7 @@ export const UploadInventoryModal = ({ closeModal }) => {
                   />
                 </div>
                 <div className='w-full'>
-                  <label className='block font-medium text-gray-500'>Izaberi fajl za uvoz</label>
+                  <label className='block font-medium text-gray-500'>Izaberi fajl</label>
                   <input
                     onChange={handleFileUpload}
                     className='w-full file:bg-indigo-50 file:text-indigo-500 hover:file:bg-indigo-100 file:rounded-lg file:rounded-tr-none file:rounded-br-none file:px-4 file:py-2 file:mr-4 file:border-none hover:cursor-pointer border rounded-lg text-gray-400'
