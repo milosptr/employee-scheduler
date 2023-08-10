@@ -25,7 +25,7 @@ export const UploadInventoryModal = ({ closeModal }) => {
   const handleSubmit = () => {
     if (!date || !file) return setError('Morate uneti i datum i fajl za uvoz')
     const formData = new FormData()
-    formData.append('date', date + ' 00:00:00')
+    formData.append('date', date + ' 06:00:00')
     formData.append('file', file)
     axios
       .post('http://192.168.200.30/public/sales/import', formData, {
