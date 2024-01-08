@@ -12,6 +12,7 @@ export default function EditEmployeeModal() {
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const [employee, setEmployee] = useState(activeEmployee)
   const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
+  const [selectedYear, setSelectedYear] = useState(dayjs().year())
   const occupations = useSelector((state) => state.general.occupations)
   const showModal = useSelector((state) => state.general.showEditEmployeeModal)
   const dateRange = useSelector((state) => state.general.dateRange)
@@ -32,11 +33,11 @@ export default function EditEmployeeModal() {
   }
   const handleMonthChange = (date) => {
     setSelectedMonth(date.month.index)
+    setSelectedYear(date.year)
   }
-  const currentMonthVacationDays = employee.vacation.filter((d) => dayjs(d).month() === selectedMonth)
-  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).month() !== selectedMonth)
+  const currentMonthVacationDays = employee.vacation.filter((d) => dayjs(d).month() === selectedMonth && dayjs(d).year() === selectedYear)
+  const vacationOldDays = employee.vacation.filter((d) => dayjs(d).month() !== selectedMonth || dayjs(d).year() !== selectedYear)
   const updateVacationDays = (dates) => {
-    console.log(dates);
     const days = dates.map((d) => dayjs(d.unix * 1000).format('YYYY-MM-DD'))
     const vacation = [...new Set([...vacationOldDays, ...days])]
     setEmployee({
