@@ -15,22 +15,17 @@ class ScheduleResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = [
-          'id' => $this->id,
-          'date' => $this->date,
-          'time' => $this->time,
-          'shift' => $this->shift,
-          'occupation' => $this->occupation,
-          'order' => $this->order,
-          'from_checkin' => $this->from_checkin,
-          'created_at' => $this->created_at,
-          'updated_at' => $this->updated_at,
+        return [
+            'id' => $this->id,
+            'date' => $this->date,
+            'time' => $this->time,
+            'shift' => $this->shift,
+            'occupation' => $this->occupation,
+            'order' => $this->order,
+            'from_checkin' => $this->from_checkin,
+            'employee' => new EmployeeResource($this->employee),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
-
-        if ($this->relationLoaded('employee')) {
-            $data['employee'] = $this->employee->toArray();
-        }
-
-        return $data;
     }
 }
