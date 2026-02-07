@@ -3,27 +3,32 @@ import { formatPrice } from '../../utils/formatPrice'
 
 export const TransactionsTab = ({ transactions }) => {
   const today = new Date()
-  const dateStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`
+  const dateStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(
+    2,
+    '0'
+  )}.${today.getFullYear()}`
 
   return (
-    <div className='p-6'>
-      <h2 className='text-xl font-semibold mb-6'>Pregled prometa za {dateStr}</h2>
-      <div className='max-w-md'>
-        <div className='flex justify-between py-3'>
-          <span>Gotovina</span>
-          <span>{formatPrice(transactions.income)} RSD</span>
-        </div>
-        <div className='flex justify-between py-3'>
-          <span>Reprezentacija</span>
-          <span>{formatPrice(transactions.onthehouse)} RSD</span>
-        </div>
-        <div className='flex justify-between py-3 border-b'>
-          <span>Storno</span>
-          <span>{formatPrice(transactions.refund)} RSD</span>
-        </div>
-        <div className='flex justify-between py-3 font-bold text-lg'>
-          <span>Ukupno</span>
-          <span>{formatPrice(transactions.total)} RSD</span>
+    <div className='flex flex-col justify-between h-full p-6 max-w-[600px] mx-auto'>
+      <div>
+        <div className='text-center text-2xl font-semibold mb-6 uppercase'>Pregled prometa {dateStr}</div>
+        <div className='mt-10 text-xl'>
+          <div className='flex justify-between items-center py-1 font-medium'>
+            <div>Gotovina</div>
+            <div>{formatPrice(transactions.income)} RSD</div>
+          </div>
+          <div className='flex justify-between items-center py-1 font-medium'>
+            <div>Reprezentacija</div>
+            <div>{formatPrice(transactions.onthehouse)} RSD</div>
+          </div>
+          <div className='flex justify-between items-center py-1 pb-3 border-b border-gray-300 font-medium'>
+            <div>Storno</div>
+            <div>{formatPrice(transactions.refund)} RSD</div>
+          </div>
+          <div className='flex justify-between items-center py-1 pt-3 font-bold'>
+            <div>Ukupno</div>
+            <div>{formatPrice(transactions.total)} RSD</div>
+          </div>
         </div>
       </div>
     </div>

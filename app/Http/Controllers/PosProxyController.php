@@ -32,6 +32,19 @@ class PosProxyController extends Controller
         }
     }
 
+    public function storno($id)
+    {
+        try {
+            $response = Http::withHeaders([
+                'X-API-Key' => config('services.pos.api_key'),
+            ])->post(config('services.pos.url') . '/api/third-party-invoices/' . $id . '/storno');
+
+            return response()->json($response->json(), $response->status());
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'POS system unreachable'], 502);
+        }
+    }
+
     public function transactions()
     {
         try {

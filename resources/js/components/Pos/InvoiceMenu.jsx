@@ -28,6 +28,17 @@ export const InvoiceMenu = ({ invoice, onAction }) => {
       })
   }
 
+  const handleStorno = () => {
+    axios.post(`/api/pos/invoices/${invoice.id}/storno`)
+      .then(() => {
+        setOpen(false)
+        onAction()
+      })
+      .catch(() => {
+        setOpen(false)
+      })
+  }
+
   return (
     <div className='relative' ref={menuRef}>
       <div
@@ -45,6 +56,12 @@ export const InvoiceMenu = ({ invoice, onAction }) => {
             onClick={handleOnTheHouse}
           >
             Na racun kuce
+          </div>
+          <div
+            className='px-4 py-3 hover:bg-gray-50 cursor-pointer text-sm text-red-600'
+            onClick={handleStorno}
+          >
+            Storniraj
           </div>
         </div>
       )}

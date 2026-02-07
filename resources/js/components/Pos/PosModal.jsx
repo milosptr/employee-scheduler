@@ -69,7 +69,7 @@ export const PosModal = ({ onClose }) => {
   return (
     <div className='fixed inset-0 z-[100] flex items-center justify-center'>
       <div className='absolute inset-0 bg-black opacity-50' onClick={handleClose}></div>
-      <div className='relative z-[101] bg-white rounded-lg shadow-xl flex flex-col w-[90%] ModalHeight'>
+      <div className={'relative z-[101] bg-white rounded-lg shadow-xl flex flex-col w-[90%] ModalHeight'}>
       <div className='flex items-center justify-between p-4 border-b'>
         <div className='text-xl font-semibold'>
           {authenticated ? 'POS' : 'Unesite PIN'}

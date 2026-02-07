@@ -46,6 +46,7 @@ Route::post('employees/{id}/checkin', [EmployeeCheckinController::class, 'checki
 // POS Proxy
 Route::get('pos/invoices', [PosProxyController::class, 'invoices']);
 Route::post('pos/invoices/{id}/on-the-house', [PosProxyController::class, 'markOnTheHouse']);
+Route::post('pos/invoices/{id}/storno', [PosProxyController::class, 'storno']);
 Route::get('pos/transactions', [PosProxyController::class, 'transactions']);
 
 // PIN
