@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import axios from 'axios'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { EnterPin } from './EnterPin'
@@ -13,6 +13,26 @@ export const PosModal = ({ onClose }) => {
   const [selectedInvoice, setSelectedInvoice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+
+  const timerRef = useRef(null)
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => {
+      onClose()
+    }, 20000)
+  }, [onClose])
+
+  useEffect(() => {
+    if (!authenticated) return
+    resetTimer()
+    const events = ['mousedown', 'touchstart', 'keydown', 'scroll']
+    events.forEach((e) => document.addEventListener(e, resetTimer))
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      events.forEach((e) => document.removeEventListener(e, resetTimer))
+    }
+  }, [authenticated, resetTimer])
 
   const fetchData = () => {
     setLoading(true)
@@ -69,7 +89,7 @@ export const PosModal = ({ onClose }) => {
   return (
     <div className='fixed inset-0 z-[100] flex items-center justify-center'>
       <div className='absolute inset-0 bg-black opacity-50' onClick={handleClose}></div>
-      <div className={'relative z-[101] bg-white rounded-lg shadow-xl flex flex-col w-[90%] ModalHeight'}>
+      <div className={'relative z-[101] bg-white rounded-lg shadow-xl flex flex-col w-[80%] ModalHeight'}>
       <div className='flex items-center justify-between p-4 border-b'>
         <div className='text-xl font-semibold'>
           {authenticated ? 'POS' : 'Unesite PIN'}

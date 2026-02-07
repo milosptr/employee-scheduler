@@ -3,6 +3,8 @@ import axios from 'axios'
 
 export const InvoiceMenu = ({ invoice, onAction }) => {
   const [open, setOpen] = useState(false)
+  const [confirmStorno, setConfirmStorno] = useState(false)
+  const [confirmOnTheHouse, setConfirmOnTheHouse] = useState(false)
   const menuRef = useRef(null)
 
   useEffect(() => {
@@ -18,24 +20,34 @@ export const InvoiceMenu = ({ invoice, onAction }) => {
   if (invoice.status === 0 || invoice.status === 2) return null
 
   const handleOnTheHouse = () => {
+    setOpen(false)
+    setConfirmOnTheHouse(true)
+  }
+
+  const confirmOnTheHouseAction = () => {
     axios.post(`/api/pos/invoices/${invoice.id}/on-the-house`)
       .then(() => {
-        setOpen(false)
+        setConfirmOnTheHouse(false)
         onAction()
       })
       .catch(() => {
-        setOpen(false)
+        setConfirmOnTheHouse(false)
       })
   }
 
   const handleStorno = () => {
+    setOpen(false)
+    setConfirmStorno(true)
+  }
+
+  const confirmStornoAction = () => {
     axios.post(`/api/pos/invoices/${invoice.id}/storno`)
       .then(() => {
-        setOpen(false)
+        setConfirmStorno(false)
         onAction()
       })
       .catch(() => {
-        setOpen(false)
+        setConfirmStorno(false)
       })
   }
 
@@ -62,6 +74,52 @@ export const InvoiceMenu = ({ invoice, onAction }) => {
             onClick={handleStorno}
           >
             Storniraj
+          </div>
+        </div>
+      )}
+      {confirmOnTheHouse && (
+        <div className='fixed inset-0 z-[200] flex items-center justify-center'>
+          <div className='absolute inset-0 bg-black opacity-50' onClick={() => setConfirmOnTheHouse(false)}></div>
+          <div className='relative z-[201] bg-white rounded-lg shadow-xl p-6 max-w-sm w-full mx-4'>
+            <h3 className='text-lg font-semibold mb-2'>Na racun kuce</h3>
+            <p className='text-gray-500 mb-6'>Da li ste sigurni da zelite da stavite ovaj racun na racun kuce?</p>
+            <div className='flex gap-3'>
+              <button
+                className='flex-1 py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50'
+                onClick={() => setConfirmOnTheHouse(false)}
+              >
+                Otkazi
+              </button>
+              <button
+                className='flex-1 py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700'
+                onClick={confirmOnTheHouseAction}
+              >
+                Potvrdi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {confirmStorno && (
+        <div className='fixed inset-0 z-[200] flex items-center justify-center'>
+          <div className='absolute inset-0 bg-black opacity-50' onClick={() => setConfirmStorno(false)}></div>
+          <div className='relative z-[201] bg-white rounded-lg shadow-xl p-6 max-w-sm w-full mx-4'>
+            <h3 className='text-lg font-semibold mb-2'>Storniranje racuna</h3>
+            <p className='text-gray-500 mb-6'>Da li ste sigurni da zelite da stornirate ovaj racun?</p>
+            <div className='flex gap-3'>
+              <button
+                className='flex-1 py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50'
+                onClick={() => setConfirmStorno(false)}
+              >
+                Otkazi
+              </button>
+              <button
+                className='flex-1 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700'
+                onClick={confirmStornoAction}
+              >
+                Storniraj
+              </button>
+            </div>
           </div>
         </div>
       )}
