@@ -82,3 +82,31 @@ input[type="color"]::-webkit-color-swatch {
     font-size: 0.72rem;
   }
 }
+
+.ModalHeight {
+  height: 90%;
+}
+.NumpadWidth {
+  width: 42%;
+}
+@media (min-width: 1600px) {
+  .ModalHeight {
+    height: 85%;
+  }
+  .NumpadWidth {
+    width: 32%;
+  }
+}
+@media (max-width: 450px) {
+  .NumpadWidth {
+    width: 92%;
+  }
+}
+
+@keyframes ErrorShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}

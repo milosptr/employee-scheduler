@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setActiveEmployee, setEmployees } from './store/general'
 import { CheckinConfirmModal } from './components/Modals/CheckinConfirmModal'
 import { UploadInventoryModal } from './components/Modals/UploadInventoryModal'
+import { PosModal } from './components/Pos/PosModal'
 import { UploadIcon } from './components/icons/UploadIcon'
+import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
 const CheckinApp = () => {
   const dispatch = useDispatch()
   const [showUploadModal, setShowUploadModal] = useState(false)
+  const [showPosModal, setShowPosModal] = useState(false)
   const employees = useSelector((state) => state.general.employees)
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const kitchenEmployees = employees.filter((employee) => employee.occupation)
@@ -49,10 +52,17 @@ const CheckinApp = () => {
       <div className='bg-white rounded-lg p-12'>
         <div className='flex items-start justify-between'>
           <div className='text-4xl font-semibold text-gray-900 mb-10 leading-none'>Prijavljivanje</div>
-          <div
-            className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
-            onClick={() => setShowUploadModal(true)}>
-            <UploadIcon />
+          <div className='flex items-center gap-3'>
+            <div
+              className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
+              onClick={() => setShowPosModal(true)}>
+              <DocumentTextIcon className='w-5 h-5' />
+            </div>
+            <div
+              className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
+              onClick={() => setShowUploadModal(true)}>
+              <UploadIcon />
+            </div>
           </div>
         </div>
         <div>
@@ -101,6 +111,7 @@ const CheckinApp = () => {
       </div>
       {!!activeEmployee && <CheckinConfirmModal />}
       {showUploadModal && <UploadInventoryModal closeModal={() => setShowUploadModal(false)} />}
+      {showPosModal && <PosModal onClose={() => setShowPosModal(false)} />}
     </div>
   )
 }

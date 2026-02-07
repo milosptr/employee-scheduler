@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'pos' => [
+        'url' => env('POS_API_URL'),
+        'api_key' => env('POS_API_KEY'),
+        'pin' => (int) env('APP_PIN', 1234),
+    ],
+
 ];

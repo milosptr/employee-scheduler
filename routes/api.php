@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\EmployeeCheckinController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PinController;
+use App\Http\Controllers\PosProxyController;
 use App\Http\Controllers\ScheduleController;
 use App\Models\EmployeeCheckin;
 use Illuminate\Http\Request;
@@ -40,3 +42,11 @@ Route::delete('schedules/{id}', [ScheduleController::class, 'destroy']);
 // Checkin
 Route::get('employeesCheckin', [EmployeeController::class, 'indexWithCheckin']);
 Route::post('employees/{id}/checkin', [EmployeeCheckinController::class, 'checkin']);
+
+// POS Proxy
+Route::get('pos/invoices', [PosProxyController::class, 'invoices']);
+Route::post('pos/invoices/{id}/on-the-house', [PosProxyController::class, 'markOnTheHouse']);
+Route::get('pos/transactions', [PosProxyController::class, 'transactions']);
+
+// PIN
+Route::post('validate-pin', [PinController::class, 'check']);
