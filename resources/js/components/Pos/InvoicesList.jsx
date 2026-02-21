@@ -43,8 +43,9 @@ export const InvoicesList = ({ invoices, selectedInvoice, onSelect }) => {
               onClick={() => onSelect(invoice)}
             >
               <div>{parseTime(invoice.created_at)}</div>
-              <div className={invoice.status === 0 ? 'line-through' : ''}>
+              <div className={`${invoice.status === 0 ? 'line-through' : ''} ${invoice.discount ? 'text-orange-500' : ''}`}>
                 {formatPrice(invoice.total)} RSD
+                {invoice.discount ? ` (${invoice.discount}%)` : ''}
               </div>
               <div>{invoice.table_name}</div>
               <div>{statusText(invoice.status)}</div>
