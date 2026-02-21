@@ -7,8 +7,10 @@ import { UploadInventoryModal } from './components/Modals/UploadInventoryModal'
 import { PosModal } from './components/Pos/PosModal'
 import { UploadIcon } from './components/icons/UploadIcon'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
+import { useInactivityRedirect } from './hooks/useInactivityRedirect'
 
 const CheckinApp = () => {
+  useInactivityRedirect()
   const dispatch = useDispatch()
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [showPosModal, setShowPosModal] = useState(false)
