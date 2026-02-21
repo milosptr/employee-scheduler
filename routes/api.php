@@ -48,6 +48,7 @@ Route::get('pos/invoices', [PosProxyController::class, 'invoices']);
 Route::post('pos/invoices/{id}/on-the-house', [PosProxyController::class, 'markOnTheHouse']);
 Route::post('pos/invoices/{id}/storno', [PosProxyController::class, 'storno']);
 Route::get('pos/transactions', [PosProxyController::class, 'transactions']);
+Route::get('pos/settings', [PosProxyController::class, 'settings']);
 
 // PIN
 Route::post('validate-pin', [PinController::class, 'check']);

@@ -57,4 +57,17 @@ class PosProxyController extends Controller
             return response()->json(['error' => 'POS system unreachable'], 502);
         }
     }
+
+    public function settings()
+    {
+        try {
+            $response = Http::withHeaders([
+                'X-API-Key' => config('services.pos.api_key'),
+            ])->get(config('services.pos.url') . '/api/settings');
+
+            return response()->json($response->json(), $response->status());
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'POS system unreachable'], 502);
+        }
+    }
 }

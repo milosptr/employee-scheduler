@@ -14,6 +14,7 @@ const CheckinApp = () => {
   const dispatch = useDispatch()
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [showPosModal, setShowPosModal] = useState(false)
+  const [settings, setSettings] = useState({ checkin_show_upload_icon: '1', checkin_show_invoice_icon: '1' })
   const employees = useSelector((state) => state.general.employees)
   const activeEmployee = useSelector((state) => state.general.activeEmployee)
   const kitchenEmployees = employees.filter((employee) => employee.occupation)
@@ -47,6 +48,9 @@ const CheckinApp = () => {
     axios.get('/api/employeesCheckin').then((res) => {
       dispatch(setEmployees(res.data.data))
     })
+    axios.get('/api/pos/settings').then((res) => {
+      setSettings(prev => ({ ...prev, ...res.data }))
+    }).catch(() => {})
   }, [])
 
   return (
@@ -55,16 +59,20 @@ const CheckinApp = () => {
         <div className='flex items-start justify-between'>
           <div className='text-4xl font-semibold text-gray-900 mb-10 leading-none'>Prijavljivanje</div>
           <div className='flex items-center gap-3'>
-            <div
-              className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
-              onClick={() => setShowPosModal(true)}>
-              <DocumentTextIcon className='w-5 h-5' />
-            </div>
-            <div
-              className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
-              onClick={() => setShowUploadModal(true)}>
-              <UploadIcon />
-            </div>
+            {settings.checkin_show_invoice_icon === '1' && (
+              <div
+                className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
+                onClick={() => setShowPosModal(true)}>
+                <DocumentTextIcon className='w-5 h-5' />
+              </div>
+            )}
+            {settings.checkin_show_upload_icon === '1' && (
+              <div
+                className='border border-gray-400 hover:bg-gray-400 hover:text-white rounded-md px-2 py-2 cursor-pointer'
+                onClick={() => setShowUploadModal(true)}>
+                <UploadIcon />
+              </div>
+            )}
           </div>
         </div>
         <div>
