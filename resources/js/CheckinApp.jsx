@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Pusher from 'pusher-js'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveEmployee, setEmployees } from './store/general'
 import { CheckinConfirmModal } from './components/Modals/CheckinConfirmModal'
@@ -51,6 +52,19 @@ const CheckinApp = () => {
     axios.get('/api/pos/settings').then((res) => {
       setSettings(prev => ({ ...prev, ...res.data }))
     }).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+      cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER
+    })
+    const channel = pusher.subscribe('broadcasting')
+    channel.bind('employee-checkin', () => {
+      axios.get('/api/employeesCheckin').then((res) => {
+        dispatch(setEmployees(res.data.data))
+      })
+    })
+    return () => pusher.disconnect()
   }, [])
 
   return (
