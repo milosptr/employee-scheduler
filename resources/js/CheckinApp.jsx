@@ -9,6 +9,7 @@ import { PosModal } from './components/Pos/PosModal'
 import { UploadIcon } from './components/icons/UploadIcon'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 import { useInactivityRedirect } from './hooks/useInactivityRedirect'
+import { attachResync } from './realtime'
 
 const CheckinApp = () => {
   useInactivityRedirect()
@@ -55,16 +56,22 @@ const CheckinApp = () => {
   }, [])
 
   useEffect(() => {
+    const refetchEmployees = () => {
+      axios.get('/api/employeesCheckin').then((res) => {
+        dispatch(setEmployees(res.data.data))
+      })
+    }
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
       cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER
     })
     const channel = pusher.subscribe('broadcasting')
-    channel.bind('employee-checkin', () => {
-      axios.get('/api/employeesCheckin').then((res) => {
-        dispatch(setEmployees(res.data.data))
-      })
-    })
-    return () => pusher.disconnect()
+    channel.bind('employee-checkin', refetchEmployees)
+    // Recover events missed while the socket was down (sleep / background / wifi drop).
+    const teardownResync = attachResync(pusher, refetchEmployees)
+    return () => {
+      teardownResync()
+      pusher.disconnect()
+    }
   }, [])
 
   return (
