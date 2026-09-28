@@ -1,5 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 
+const INACTIVITY_TIMEOUT_MS = 10000
+
 export const useInactivityRedirect = () => {
   const timerRef = useRef(null)
   const sendBackUrl = new URLSearchParams(window.location.search).get('sendBack')
@@ -8,7 +10,7 @@ export const useInactivityRedirect = () => {
     if (timerRef.current) clearTimeout(timerRef.current)
     timerRef.current = setTimeout(() => {
       window.location.href = sendBackUrl
-    }, 20000)
+    }, INACTIVITY_TIMEOUT_MS)
   }, [sendBackUrl])
 
   useEffect(() => {
